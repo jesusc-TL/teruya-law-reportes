@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semana 20-27 Abril 2026 - Dashboard Ejecutivo - Teruya Law</title>
+  <style>
+    :root {
+      --bg: #eef3f8;
+      --surface: #ffffff;
+      --surface-soft: #f7f9fc;
+      --ink: #182433;
+      --muted: #5f6f82;
+      --line: #d8e0ea;
+      --navy: #15314b;
+      --navy-2: #254b6f;
+      --gold: #c7a35d;
+      --green: #18815d;
+      --green-soft: #e8f6f0;
+      --red: #c64d4d;
+      --red-soft: #fdeeee;
+      --orange: #d9861c;
+      --orange-soft: #fff5e8;
+      --blue: #2a6ecb;
+      --blue-soft: #edf4ff;
+      --purple: #6e58b5;
+      --purple-soft: #f0ecff;
+      --fb: #1877f2;
+      --ig: #c13584;
+      --tk: #111111;
+      --shadow: 0 18px 45px rgba(21, 49, 75, 0.08);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(199, 163, 93, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(42, 110, 203, 0.12), transparent 24%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.45;
+      padding: 28px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .dashboard {
+      max-width: 1480px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #10253a 0%, #183654 64%, #244c74 100%);
+      color: #fff;
+      border-radius: 30px;
+      padding: 30px 34px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -90px -120px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(199, 163, 93, 0.4), rgba(199, 163, 93, 0));
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 28px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand img {
+      width: 170px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.22));
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.78);
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.06;
+      margin-bottom: 10px;
+      max-width: 760px;
+    }
+
+    .hero p {
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 820px;
+      font-size: 14px;
+    }
+
+    .hero-meta {
+      min-width: 310px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      padding: 16px 18px;
+      backdrop-filter: blur(8px);
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .meta-item {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .meta-label {
+      color: rgba(255, 255, 255, 0.64);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .hero-strip {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .strip-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 14px 16px;
+    }
+
+    .strip-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.62);
+      margin-bottom: 6px;
+    }
+
+    .strip-value {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .strip-sub {
+      margin-top: 6px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 12px;
+    }
+
+    .section {
+      margin-top: 24px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-size: 24px;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 880px;
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      color: var(--ink);
+    }
+
+    .tag.green { background: var(--green-soft); color: var(--green); border-color: rgba(24, 129, 93, 0.18); }
+    .tag.red { background: var(--red-soft); color: var(--red); border-color: rgba(198, 77, 77, 0.18); }
+    .tag.blue { background: var(--blue-soft); color: var(--blue); border-color: rgba(42, 110, 203, 0.18); }
+    .tag.gold { background: rgba(199, 163, 93, 0.14); color: #8d6515; border-color: rgba(199, 163, 93, 0.2); }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .kpi {
+      border-radius: 20px;
+      padding: 18px;
+      background: linear-gradient(180deg, #fff 0%, #f9fbfd 100%);
+      border: 1px solid var(--line);
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .kpi.tinted-blue { background: linear-gradient(180deg, #f8fbff 0%, #edf4ff 100%); }
+    .kpi.tinted-green { background: linear-gradient(180deg, #fbfefc 0%, #eaf7f2 100%); }
+    .kpi.tinted-gold { background: linear-gradient(180deg, #fffdfa 0%, #fbf4e7 100%); }
+    .kpi.tinted-red { background: linear-gradient(180deg, #fffdfd 0%, #fdf0f0 100%); }
+
+    .kpi-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .kpi-value {
+      font-size: clamp(30px, 3vw, 42px);
+      line-height: 0.95;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .kpi-foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .kpi-note {
+      color: var(--muted);
+      font-size: 12px;
+      max-width: 70%;
+    }
+
+    .delta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .delta.up { background: var(--green-soft); color: var(--green); }
+    .delta.down { background: var(--red-soft); color: var(--red); }
+    .delta.flat { background: var(--surface-soft); color: var(--muted); }
+
+    .triple-grid,
+    .double-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .double-grid { grid-template-columns: 1.15fr 0.85fr; }
+    .triple-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .panel {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .panel h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .list-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .bullet {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-top: 6px;
+      flex: 0 0 auto;
+    }
+
+    .bullet.green { background: var(--green); }
+    .bullet.red { background: var(--red); }
+    .bullet.gold { background: var(--gold); }
+    .bullet.blue { background: var(--blue); }
+
+    .list-item strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .mini-bars {
+      display: grid;
+      gap: 12px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 150px 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .bar-label {
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .bar-track {
+      width: 100%;
+      height: 11px;
+      border-radius: 999px;
+      background: #dde5ef;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+    }
+
+    .bar-fill.green { background: linear-gradient(90deg, #18815d, #33a57d); }
+    .bar-fill.red { background: linear-gradient(90deg, #c64d4d, #de7272); }
+    .bar-fill.blue { background: linear-gradient(90deg, #2a6ecb, #5d93dc); }
+    .bar-fill.gold { background: linear-gradient(90deg, #c7a35d, #ddb36b); }
+    .bar-fill.purple { background: linear-gradient(90deg, #6e58b5, #8a76d0); }
+
+    .bar-value {
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .cards-2,
+    .cards-3 {
+      display: grid;
+      gap: 14px;
+    }
+
+    .cards-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cards-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .micro {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .micro-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+
+    .channel {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot.fb { background: var(--fb); }
+    .dot.ig { background: var(--ig); }
+    .dot.tk { background: var(--tk); }
+
+    .micro-kpis {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .micro-stat {
+      padding: 12px;
+      border-radius: 14px;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+    }
+
+    .micro-label {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 5px;
+    }
+
+    .micro-value {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 18px;
+      font-size: 13px;
+    }
+
+    thead th {
+      text-align: left;
+      background: #eef4fb;
+      color: var(--navy);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    tbody td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      background: #fff;
+    }
+
+    tbody tr:nth-child(even) td {
+      background: #fbfcfe;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      border: 1px solid transparent;
+    }
+
+    .status.green { color: var(--green); background: var(--green-soft); border-color: rgba(24, 129, 93, 0.18); }
+    .status.red { color: var(--red); background: var(--red-soft); border-color: rgba(198, 77, 77, 0.18); }
+    .status.blue { color: var(--blue); background: var(--blue-soft); border-color: rgba(42, 110, 203, 0.18); }
+    .status.gold { color: #8d6515; background: rgba(199, 163, 93, 0.14); border-color: rgba(199, 163, 93, 0.2); }
+    .status.purple { color: var(--purple); background: var(--purple-soft); border-color: rgba(110, 88, 181, 0.18); }
+
+    .footnote {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer {
+      padding: 24px 0 10px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    @media (max-width: 1180px) {
+      .hero-strip,
+      .kpi-grid,
+      .triple-grid,
+      .cards-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .double-grid,
+      .cards-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 780px) {
+      body { padding: 16px; }
+      .hero,
+      .section { padding: 18px; }
+      .hero-strip,
+      .kpi-grid,
+      .triple-grid,
+      .cards-3,
+      .cards-2 { grid-template-columns: 1fr; }
+      .meta-grid { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 1fr; }
+      .brand { align-items: flex-start; }
+      .brand img { width: 140px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="brand">
+            <img src="../assets/logo-ts-blanco.png" alt="Teruya Law">
+            <div>
+              <div class="eyebrow">Dashboard Ejecutivo · Marketing OS</div>
+              <h1>Semana 20-27 Abril 2026</h1>
+              <p>Vista consolidada para dirección: performance de redes, Zoho, referidos y avance operativo sobre la nueva landing y Google Ads. El foco ya no está en implementación, sino en leer resultados, detectar cuellos de botella y comparar contra el punto de partida.</p>
+            </div>
+          </div>
+        </div>
+        <div class="hero-meta">
+          <div class="meta-label">Estado del reporte</div>
+          <div class="meta-value">Reporte ejecutivo listo para dirección</div>
+          <div class="meta-grid">
+            <div class="meta-item">
+              <div class="meta-label">Período</div>
+              <div class="meta-value">20-27 Abr 2026</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Próximo corte</div>
+              <div class="meta-value">Jueves con data Ads</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Subdominio</div>
+              <div class="meta-value">GitHub Pages listo</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Uso</div>
+              <div class="meta-value">Interno · Dirección</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-strip">
+        <div class="strip-card">
+          <div class="strip-label">Leads reales abril</div>
+          <div class="strip-value">7</div>
+          <div class="strip-sub">1 conversión · 14.3% cierre</div>
+        </div>
+        <div class="strip-card">
+          <div class="strip-label">Referidos semanales</div>
+          <div class="strip-value">28</div>
+          <div class="strip-sub">12 sin contactar · 8 en pipeline activo</div>
+        </div>
+        <div class="strip-card">
+          <div class="strip-label">Meta conversaciones</div>
+          <div class="strip-value">18</div>
+          <div class="strip-sub">7 Facebook + 11 Instagram</div>
+        </div>
+        <div class="strip-card">
+          <div class="strip-label">Implementación</div>
+          <div class="strip-value">100%</div>
+          <div class="strip-sub">Landing nueva activa + Google Ads activo</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">KPIs Ejecutivos</h2>
+          <p class="section-sub">Primera lectura de arriba hacia abajo: negocio, pipeline y canales. Las variaciones indican si estamos mejor o peor que el período de referencia que entrega cada plataforma.</p>
+        </div>
+        <div class="tag-row">
+          <span class="tag green">Implementación cerrada</span>
+          <span class="tag red">Cuello: referidos sin contactar</span>
+          <span class="tag blue">Jueves = lectura de Ads</span>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <article class="kpi tinted-gold">
+          <div>
+            <div class="kpi-label">Zoho · Conversión real</div>
+            <div class="kpi-value">14.3%</div>
+          </div>
+          <div class="kpi-foot">
+            <div class="kpi-note">1 cliente sobre 7 leads reales de abril, ya limpio de tests.</div>
+            <span class="delta flat">1 de 7</span>
+          </div>
+        </article>
+
+        <article class="kpi tinted-red">
+          <div>
+            <div class="kpi-label">Referidos sin contactar</div>
+            <div class="kpi-value">12</div>
+          </div>
+          <div class="kpi-foot">
+            <div class="kpi-note">42.9% del pipeline semanal todavía no tuvo primer toque.</div>
+            <span class="delta down">Principal riesgo</span>
+          </div>
+        </article>
+
+        <article class="kpi tinted-blue">
+          <div>
+            <div class="kpi-label">Facebook visualizaciones</div>
+            <div class="kpi-value">12.7k</div>
+          </div>
+          <div class="kpi-foot">
+            <div class="kpi-note">El canal repuntó en actividad, pero sigue sin sostener seguidores netos.</div>
+            <span class="delta up">+13.7%</span>
+          </div>
+        </article>
+
+        <article class="kpi tinted-green">
+          <div>
+            <div class="kpi-label">Instagram interacciones</div>
+            <div class="kpi-value">1.6k</div>
+          </div>
+          <div class="kpi-foot">
+            <div class="kpi-note">Engagement fuerte impulsado por una pieza ganadora de alto alcance.</div>
+            <span class="delta up">+29.6%</span>
+          </div>
+        </article>
+
+        <article class="kpi tinted-green">
+          <div>
+            <div class="kpi-label">Instagram conversaciones</div>
+            <div class="kpi-value">11</div>
+          </div>
+          <div class="kpi-foot">
+            <div class="kpi-note">La fricción bajó y el canal abrió más conversación directa.</div>
+            <span class="delta up">+450%</span>
+          </div>
+        </article>
+
+        <article class="kpi tinted-green">
+          <div>
+            <div class="kpi-label">TikTok crecimiento neto</div>
+            <div class="kpi-value">+146</div>
+          </div>
+          <div class="kpi-foot">
+            <div class="kpi-note">173 seguidores nuevos menos 27 bajas en la semana 19-25 abril.</div>
+            <span class="delta up">Aceleración real</span>
+          </div>
+        </article>
+
+        <article class="kpi tinted-red">
+          <div>
+            <div class="kpi-label">Did Not Hire en Zoho</div>
+            <div class="kpi-value">4</div>
+          </div>
+          <div class="kpi-foot">
+            <div class="kpi-note">La mitad de los leads reales de abril no terminó contratando.</div>
+            <span class="delta down">50% del mes</span>
+          </div>
+        </article>
+
+        <article class="kpi tinted-gold">
+          <div>
+            <div class="kpi-label">Activo ahora</div>
+            <div class="kpi-value">Landing + Ads</div>
+          </div>
+          <div class="kpi-foot">
+            <div class="kpi-note">La siguiente conversación ejecutiva ya es con data, no con hipótesis.</div>
+            <span class="delta flat">Medir jueves</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Lectura Ejecutiva</h2>
+          <p class="section-sub">Qué avanzó, qué duele y qué decisión táctica conviene tomar ahora.</p>
+        </div>
+      </div>
+
+      <div class="triple-grid">
+        <div class="panel">
+          <h3>Lo que salió bien</h3>
+          <div class="list">
+            <div class="list-item">
+              <span class="bullet green"></span>
+              <div><strong>Landing nueva publicada.</strong> La nueva experiencia de captación quedó activa con foco en conversión, claridad de oferta y menor fricción.</div>
+            </div>
+            <div class="list-item">
+              <span class="bullet green"></span>
+              <div><strong>Google Ads ya corre.</strong> El próximo corte va a permitir evaluar tráfico real, formularios y calidad del lead.</div>
+            </div>
+            <div class="list-item">
+              <span class="bullet green"></span>
+              <div><strong>Instagram encontró pieza ganadora.</strong> “El parole no es un plan a largo plazo” abrió una diferencia clara frente al resto del contenido.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Lo que preocupa</h3>
+          <div class="list">
+            <div class="list-item">
+              <span class="bullet red"></span>
+              <div><strong>12 referidos siguen sin contacto.</strong> El mayor problema ya no es adquisición, sino velocidad de respuesta comercial.</div>
+            </div>
+            <div class="list-item">
+              <span class="bullet red"></span>
+              <div><strong>Zoho sigue frágil.</strong> De 7 leads reales del mes, 4 terminaron en did not hire y solo 1 cerró.</div>
+            </div>
+            <div class="list-item">
+              <span class="bullet red"></span>
+              <div><strong>Facebook pierde neto.</strong> Aunque mejora en vistas e interacciones, cerró con 11 altas vs 18 bajas.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Qué hacemos ahora</h3>
+          <div class="list">
+            <div class="list-item">
+              <span class="bullet gold"></span>
+              <div><strong>Jueves = lectura de Ads.</strong> Revisar calidad de tráfico, primer contacto y señales de intención de la nueva landing.</div>
+            </div>
+            <div class="list-item">
+              <span class="bullet gold"></span>
+              <div><strong>Referidos primero.</strong> Ordenar responsables y barrer los 12 not contacted antes de que se enfríen.</div>
+            </div>
+            <div class="list-item">
+              <span class="bullet gold"></span>
+              <div><strong>Escalar formatos ganadores.</strong> Replicar ángulo, copy y estructura del mejor contenido de Instagram.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Implementación Comercial</h2>
+          <p class="section-sub">Estado real del frente de landing, pauta y construcción de nuevas páginas con socios.</p>
+        </div>
+        <div class="tag-row">
+          <span class="tag green">Landing activa</span>
+          <span class="tag blue">Ads activos</span>
+          <span class="tag gold">Medición pendiente</span>
+        </div>
+      </div>
+
+      <div class="double-grid">
+        <div class="panel">
+          <h3>Nueva landing + Google Ads</h3>
+          <div class="stack">
+            <div class="list-item">
+              <span class="bullet green"></span>
+              <div><strong>La parte técnica ya quedó resuelta.</strong> La landing está activa y la campaña nueva de Google Ads ya está enviando el tráfico que vamos a revisar en el próximo corte.</div>
+            </div>
+            <div class="list-item">
+              <span class="bullet blue"></span>
+              <div><strong>Qué se hizo exactamente.</strong> Se trabajó la arquitectura de conversión, el copy, la propuesta de valor, la experiencia de contacto y la conexión directa con pauta para salir a mercado.</div>
+            </div>
+            <div class="list-item">
+              <span class="bullet gold"></span>
+              <div><strong>Qué falta.</strong> Todavía no corresponde juzgar performance final: el jueves recién vamos a tener lectura inicial de tráfico, formularios y calidad de lead.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Cómo se dividió el trabajo con socios</h3>
+          <div class="mini-bars">
+            <div class="bar-row">
+              <div class="bar-label">Marketing</div>
+              <div class="bar-track"><div class="bar-fill blue" style="width: 82%"></div></div>
+              <div class="bar-value">Estrategia, estructura, oferta, mensajes, activación</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Socios</div>
+              <div class="bar-track"><div class="bar-fill gold" style="width: 58%"></div></div>
+              <div class="bar-value">Validación comercial, criterio operativo, insumos</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Resultado</div>
+              <div class="bar-track"><div class="bar-fill green" style="width: 92%"></div></div>
+              <div class="bar-value">Nuevas landings salen más rápido sin trabar pauta</div>
+            </div>
+          </div>
+          <p class="footnote">La lógica de trabajo ya quedó montada como sistema: marketing lidera la construcción del activo y los socios validan para no frenar velocidad.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Pipeline Comercial</h2>
+          <p class="section-sub">Comparación entre leads reales de Zoho en abril y pipeline semanal de referidos. La lectura importante es dónde está el atasco hoy.</p>
+        </div>
+      </div>
+
+      <div class="double-grid">
+        <div class="panel">
+          <h3>Zoho CRM · Abril limpio de tests</h3>
+          <div class="cards-2">
+            <div class="micro">
+              <div class="micro-head">
+                <span class="channel"><span class="dot fb" style="background: var(--blue);"></span>Resumen</span>
+                <span class="delta flat">Corte 27 abr</span>
+              </div>
+              <div class="micro-kpis">
+                <div class="micro-stat">
+                  <div class="micro-label">Leads reales</div>
+                  <div class="micro-value">7</div>
+                  <div class="kpi-note">Andres Test excluido</div>
+                </div>
+                <div class="micro-stat">
+                  <div class="micro-label">Conversión</div>
+                  <div class="micro-value">1</div>
+                  <div class="kpi-note">$1,000 · 9 días</div>
+                </div>
+                <div class="micro-stat">
+                  <div class="micro-label">Contacted</div>
+                  <div class="micro-value">2</div>
+                  <div class="kpi-note">Hersson + Elsa</div>
+                </div>
+                <div class="micro-stat">
+                  <div class="micro-label">Did not hire</div>
+                  <div class="micro-value">4</div>
+                  <div class="kpi-note">Mitad del volumen</div>
+                </div>
+              </div>
+            </div>
+            <div class="micro">
+              <div class="micro-head">
+                <span class="channel"><span class="dot" style="background: var(--gold);"></span>Fuentes</span>
+                <span class="delta down">Embudo corto</span>
+              </div>
+              <div class="mini-bars">
+                <div class="bar-row">
+                  <div class="bar-label">Click Funnel</div>
+                  <div class="bar-track"><div class="bar-fill gold" style="width: 50%"></div></div>
+                  <div class="bar-value">4 · 50%</div>
+                </div>
+                <div class="bar-row">
+                  <div class="bar-label">Landing Web</div>
+                  <div class="bar-track"><div class="bar-fill blue" style="width: 14.3%"></div></div>
+                  <div class="bar-value">1 · 14.3%</div>
+                </div>
+                <div class="bar-row">
+                  <div class="bar-label">Marketing</div>
+                  <div class="bar-track"><div class="bar-fill green" style="width: 14.3%"></div></div>
+                  <div class="bar-value">1 · 14.3%</div>
+                </div>
+                <div class="bar-row">
+                  <div class="bar-label">CF queue detenido</div>
+                  <div class="bar-track"><div class="bar-fill purple" style="width: 14.3%"></div></div>
+                  <div class="bar-value">1 · 14.3%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 14px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Estado</th>
+                  <th>Lead</th>
+                  <th>Fuente</th>
+                  <th>Ingreso</th>
+                  <th>Observación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="status green">Cliente</span></td>
+                  <td>Santiago G.R.</td>
+                  <td>Marketing</td>
+                  <td>08/04</td>
+                  <td>$1,000 · conversión en 9 días</td>
+                </tr>
+                <tr>
+                  <td><span class="status blue">Contactado</span></td>
+                  <td>Hersson J.B.P.</td>
+                  <td>Click Funnel queue detenido</td>
+                  <td>18/04</td>
+                  <td>Contacto el mismo día</td>
+                </tr>
+                <tr>
+                  <td><span class="status blue">Contactado</span></td>
+                  <td>Elsa J.</td>
+                  <td>Landing Web TL-MKT</td>
+                  <td>18/04</td>
+                  <td>Seguimiento activo</td>
+                </tr>
+                <tr>
+                  <td><span class="status red">No contrató</span></td>
+                  <td>Ronalvy G.</td>
+                  <td>Click Funnel</td>
+                  <td>01/04</td>
+                  <td>No interesado</td>
+                </tr>
+                <tr>
+                  <td><span class="status red">No contrató</span></td>
+                  <td>Yorbin U.</td>
+                  <td>Click Funnel</td>
+                  <td>01/04</td>
+                  <td>No se pudo comunicar</td>
+                </tr>
+                <tr>
+                  <td><span class="status red">No contrató</span></td>
+                  <td>Yasiel O.</td>
+                  <td>Click Funnel</td>
+                  <td>01/04</td>
+                  <td>No interesado</td>
+                </tr>
+                <tr>
+                  <td><span class="status red">No contrató</span></td>
+                  <td>Angel A.</td>
+                  <td>Click Funnel</td>
+                  <td>01/04</td>
+                  <td>No se pudo comunicar</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Referidos · Semana 20-27 Abril</h3>
+          <div class="cards-2">
+            <div class="micro">
+              <div class="micro-head">
+                <span class="channel"><span class="dot" style="background: var(--green);"></span>Pipeline activo</span>
+                <span class="delta up">8 casos</span>
+              </div>
+              <div class="micro-kpis">
+                <div class="micro-stat">
+                  <div class="micro-label">Approved intake</div>
+                  <div class="micro-value">4</div>
+                  <div class="kpi-note">Ya aprobados</div>
+                </div>
+                <div class="micro-stat">
+                  <div class="micro-label">Contacted</div>
+                  <div class="micro-value">3</div>
+                  <div class="kpi-note">Primer toque hecho</div>
+                </div>
+                <div class="micro-stat">
+                  <div class="micro-label">Sent approval</div>
+                  <div class="micro-value">1</div>
+                  <div class="kpi-note">Pendiente decisión</div>
+                </div>
+                <div class="micro-stat">
+                  <div class="micro-label">Future TBD</div>
+                  <div class="micro-value">2</div>
+                  <div class="kpi-note">Seguimiento posterior</div>
+                </div>
+              </div>
+            </div>
+            <div class="micro">
+              <div class="micro-head">
+                <span class="channel"><span class="dot" style="background: var(--red);"></span>Cuello actual</span>
+                <span class="delta down">12 sin tocar</span>
+              </div>
+              <div class="micro-kpis">
+                <div class="micro-stat">
+                  <div class="micro-label">Not contacted</div>
+                  <div class="micro-value">12</div>
+                  <div class="kpi-note">42.9% del total</div>
+                </div>
+                <div class="micro-stat">
+                  <div class="micro-label">Did not hire</div>
+                  <div class="micro-value">6</div>
+                  <div class="kpi-note">21.4% del total</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top: 14px; padding: 16px;">
+            <h3 style="margin-bottom: 14px;">Distribución del pipeline</h3>
+            <div class="mini-bars">
+              <div class="bar-row">
+                <div class="bar-label">Not Contacted</div>
+                <div class="bar-track"><div class="bar-fill red" style="width: 100%"></div></div>
+                <div class="bar-value">12 · 42.9%</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Did Not Hire</div>
+                <div class="bar-track"><div class="bar-fill gold" style="width: 50%"></div></div>
+                <div class="bar-value">6 · 21.4%</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Approved Intake</div>
+                <div class="bar-track"><div class="bar-fill green" style="width: 33.3%"></div></div>
+                <div class="bar-value">4 · 14.3%</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Contacted</div>
+                <div class="bar-track"><div class="bar-fill blue" style="width: 25%"></div></div>
+                <div class="bar-value">3 · 10.7%</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Future TBD</div>
+                <div class="bar-track"><div class="bar-fill purple" style="width: 16.7%"></div></div>
+                <div class="bar-value">2 · 7.1%</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Sent Approval</div>
+                <div class="bar-track"><div class="bar-fill blue" style="width: 8.3%"></div></div>
+                <div class="bar-value">1 · 3.6%</div>
+              </div>
+            </div>
+          </div>
+
+          <p class="footnote">Lectura operativa: el problema ya no es volumen, sino velocidad de contacto. Si ese cuello no baja, el rendimiento total del sistema comercial se distorsiona.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Rendimiento de Canales</h2>
+          <p class="section-sub">Vista estilo BI por plataforma: qué sube, qué cae y dónde aparecen señales útiles para repetir.</p>
+        </div>
+      </div>
+
+      <div class="cards-3">
+        <article class="micro">
+          <div class="micro-head">
+            <span class="channel"><span class="dot fb"></span>Facebook</span>
+            <span class="delta up">Actividad arriba</span>
+          </div>
+          <div class="micro-kpis">
+            <div class="micro-stat">
+              <div class="micro-label">Visualizaciones</div>
+              <div class="micro-value">12.7k</div>
+              <span class="delta up">+13.7%</span>
+            </div>
+            <div class="micro-stat">
+              <div class="micro-label">Espectadores</div>
+              <div class="micro-value">3,947</div>
+              <span class="delta up">+21.3%</span>
+            </div>
+            <div class="micro-stat">
+              <div class="micro-label">Interacciones</div>
+              <div class="micro-value">120</div>
+              <span class="delta up">+100%</span>
+            </div>
+            <div class="micro-stat">
+              <div class="micro-label">Conversaciones</div>
+              <div class="micro-value">7</div>
+              <span class="delta up">+250%</span>
+            </div>
+          </div>
+          <p class="footnote">Repunte claro de actividad orgánica, pero no alcanza todavía para sostener seguidores netos: 11 nuevas altas vs 18 bajas.</p>
+        </article>
+
+        <article class="micro">
+          <div class="micro-head">
+            <span class="channel"><span class="dot ig"></span>Instagram</span>
+            <span class="delta up">Engagement útil</span>
+          </div>
+          <div class="micro-kpis">
+            <div class="micro-stat">
+              <div class="micro-label">Visualizaciones</div>
+              <div class="micro-value">14,091</div>
+              <span class="delta down">-42%</span>
+            </div>
+            <div class="micro-stat">
+              <div class="micro-label">Alcance</div>
+              <div class="micro-value">762</div>
+              <span class="delta down">-36.1%</span>
+            </div>
+            <div class="micro-stat">
+              <div class="micro-label">Interacciones</div>
+              <div class="micro-value">1.6k</div>
+              <span class="delta up">+29.6%</span>
+            </div>
+            <div class="micro-stat">
+              <div class="micro-label">Conversaciones</div>
+              <div class="micro-value">11</div>
+              <span class="delta up">+450%</span>
+            </div>
+          </div>
+          <p class="footnote">Canal con mejor señal cualitativa: aunque cae el alcance agregado, suben la conversación y la interacción útil. La pieza ganadora explica gran parte del salto.</p>
+        </article>
+
+        <article class="micro">
+          <div class="micro-head">
+            <span class="channel"><span class="dot tk"></span>TikTok</span>
+            <span class="delta up">Crecimiento real</span>
+          </div>
+          <div class="micro-kpis">
+            <div class="micro-stat">
+              <div class="micro-label">Visualizaciones</div>
+              <div class="micro-value">816</div>
+              <span class="delta flat">19-25 abr</span>
+            </div>
+            <div class="micro-stat">
+              <div class="micro-label">Me gusta</div>
+              <div class="micro-value">20</div>
+              <span class="delta flat">CSV diario</span>
+            </div>
+            <div class="micro-stat">
+              <div class="micro-label">Nuevos seguidores</div>
+              <div class="micro-value">173</div>
+              <span class="delta up">Fuerte captación</span>
+            </div>
+            <div class="micro-stat">
+              <div class="micro-label">Crecimiento neto</div>
+              <div class="micro-value">+146</div>
+              <span class="delta up">173 menos 27</span>
+            </div>
+          </div>
+          <p class="footnote">TikTok no muestra todavía rendimiento por publicación, pero el crecimiento neto semanal confirma que algo sí empujó descubrimiento y vale la pena aislarlo.</p>
+        </article>
+      </div>
+
+      <div class="double-grid" style="margin-top: 16px;">
+        <div class="panel">
+          <h3>Top contenido observado</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Canal</th>
+                <th>Pieza</th>
+                <th>Métrica principal</th>
+                <th>Lectura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="status red" style="background: var(--blue-soft); color: var(--fb); border-color: rgba(24,119,242,0.18);">Facebook</span></td>
+                <td>¿Llevas meses sin noticias de tu caso de asilo?</td>
+                <td>608 vistas · 6 likes · 4 comentarios</td>
+                <td>Mayor volumen de vistas dentro de Facebook esta semana.</td>
+              </tr>
+              <tr>
+                <td><span class="status purple" style="background: rgba(193,53,132,0.12); color: var(--ig); border-color: rgba(193,53,132,0.18);">Instagram</span></td>
+                <td>El parole no es un plan a largo plazo</td>
+                <td>11.9k vistas · 201 likes</td>
+                <td>Pieza ganadora del período; marca un formato a replicar.</td>
+              </tr>
+              <tr>
+                <td><span class="status purple" style="background: rgba(193,53,132,0.12); color: var(--ig); border-color: rgba(193,53,132,0.18);">Instagram</span></td>
+                <td>No pongas tu caso en manos equivocadas</td>
+                <td>1.0k vistas · 227 likes · 1 share</td>
+                <td>Alto engagement relativo sobre una base más chica.</td>
+              </tr>
+              <tr>
+                <td><span class="status purple" style="background: rgba(193,53,132,0.12); color: var(--ig); border-color: rgba(193,53,132,0.18);">Instagram</span></td>
+                <td>¿Llevas meses sin noticias de tu caso de asilo?</td>
+                <td>362 vistas · 263 likes · 5 comentarios</td>
+                <td>Mayor densidad de respuesta en comentarios.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="panel">
+          <h3>Qué está diciendo la comparación</h3>
+          <div class="list">
+            <div class="list-item">
+              <span class="bullet blue"></span>
+              <div><strong>Facebook viene desde abajo y mejora.</strong> Las subas de vistas, espectadores e interacciones muestran recuperación, pero todavía no convierten en fidelidad.</div>
+            </div>
+            <div class="list-item">
+              <span class="bullet green"></span>
+              <div><strong>Instagram cambia calidad por volumen.</strong> Menos alcance agregado, pero más interacción y más conversación útil. Es mejor señal comercial que una pura vanidad de impresiones.</div>
+            </div>
+            <div class="list-item">
+              <span class="bullet gold"></span>
+              <div><strong>TikTok trae descubrimiento.</strong> Aunque no vemos todavía detalle creativo, el neto de +146 obliga a rastrear tema, formato y timing para replicar.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      Semana 20-27 Abril 2026 · Teruya Law · Dashboard Ejecutivo de Marketing · Generado para dirección interna
+    </div>
+  </div>
+</body>
+</html>
