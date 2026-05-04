@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Semana 27 Abril-04 Mayo 2026 · Marketing Dashboard · Teruya Law</title>
+  <style>
+    :root {
+      --bg: #f0f2f5;
+      --ink: #252423;
+      --panel: #ffffff;
+      --line: #e1dfdd;
+      --blue: #0078d4;
+      --muted: #605e5c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      font-size: 13px;
+    }
+    .wrap { width: 100%; padding: 12px; }
+    .hero {
+      border-radius: 4px;
+      background: linear-gradient(135deg, #0f4f9c 0%, #0078d4 100%);
+      color: #fff;
+      padding: 22px 28px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.12);
+      display: grid;
+      grid-template-columns: 240px 1fr 240px;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-logo {
+      width: 220px;
+      max-width: 34vw;
+      height: auto;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
+    .hero-copy {
+      text-align: center;
+      min-width: 0;
+      grid-column: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero h1 { margin: 0; font-size: 28px; font-weight: 600; }
+    .hero p { margin: 10px 0 0; max-width: none; color: #ebf3ff; }
+    .filters {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+    .filter {
+      border-radius: 4px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.12);
+    }
+    .label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .value { font-size: 13px; color: var(--ink); }
+    .section-title {
+      margin: 16px 0 8px;
+      border-left: 4px solid var(--blue);
+      border-bottom: 1px solid var(--line);
+      background: #f8f9fa;
+      border-radius: 0 4px 4px 0;
+      padding: 10px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--ink);
+    }
+    .kpis {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+    .kpi {
+      min-height: 96px;
+      border-radius: 4px;
+      padding: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.12);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .kpi .name { font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+    .kpi .num { font-size: 30px; font-weight: 600; line-height: 1; }
+    .kpi .sub { font-size: 11px; color: #a19f9d; }
+
+    .pink { background:#e25b88; color:#fff; }
+    .white { background:#fff; border:1px solid #b48aff; color:#181818; }
+    .gold { background:#fff9eb; color:#9d6b12; }
+    .deep { background:#1461b2; color:#fff; }
+    .softblue { background:#eef7ff; color:#245a97; }
+    .purple { background:#8c52c8; color:#fff; }
+    .green { background:#e7f6ef; color:#1f5f46; border:1px solid #b9e3cf; }
+    .green .sub { color:#4d7a68; }
+
+    .grid2 { display:grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap:12px; margin-top:12px; }
+    .community-head {
+      margin: 16px 0 8px;
+      border-radius: 4px;
+      border-left: 4px solid #7f57c2;
+      background: #f7f8fc;
+      border-top: 1px solid #e4e8f1;
+      border-right: 1px solid #e4e8f1;
+      border-bottom: 1px solid #e4e8f1;
+      padding: 12px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: #3a3f4a;
+    }
+    .community-cards {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 8px;
+    }
+    .c-card {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid #e1e6ef;
+      box-shadow: 0 1px 4px rgba(0,0,0,.12);
+      padding: 12px 14px;
+      border-top-width: 3px;
+    }
+    .c-fb { border-top-color: #3b74d9; }
+    .c-ig { border-top-color: #b43f89; }
+    .c-tt { border-top-color: #5d6066; }
+    .c-total { border-top-color: #b88b22; }
+    .c-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: #6b707b;
+      margin-bottom: 6px;
+    }
+    .c-value {
+      font-size: 42px;
+      line-height: 1;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .c-sub {
+      font-size: 24px;
+      font-weight: 600;
+      color: #2f7e38;
+      margin-right: 6px;
+    }
+    .c-note { color:#a19f9d; font-size: 11px; }
+    .panel {
+      border-radius: 4px;
+      border: 1px solid #c9d8ee;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,.12);
+      padding: 14px;
+    }
+    .pie-wrap {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 18px;
+      padding: 8px 4px;
+      flex-wrap: wrap;
+    }
+    .pie {
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background:
+        conic-gradient(
+          #4b6cb7 0 25%,
+          #2aa876 25% 50%,
+          #f39b63 50% 62.5%,
+          #9c7bd6 62.5% 75%,
+          #e25b88 75% 87.5%,
+          #5f6f82 87.5% 100%
+        );
+      border: 10px solid #f5f8fd;
+      box-shadow: inset 0 0 0 1px #dbe5f3;
+      margin-top: -24px;
+    }
+    .legend {
+      min-width: 260px;
+      display: grid;
+      gap: 8px;
+      font-size: 13px;
+      color: #25304d;
+    }
+    .legend-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid #dbe5f3;
+      background: #fbfdff;
+      border-radius: 10px;
+      padding: 7px 10px;
+    }
+    .legend-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+    .sw {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+    table { width:100%; border-collapse: collapse; font-size: 13px; }
+    th, td { border-bottom:1px solid var(--line); padding:9px 14px; text-align:left; }
+    th { background:#f3f2f1; color:var(--muted); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+    .foot { margin-top: 14px; color: var(--muted); font-size: 12px; }
+    .channel-title {
+      margin: 14px 0 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #3b74d9;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+    .channel-title.ig { color: #b43f89; }
+    .channel-title::before {
+      content: "";
+      width: 4px;
+      height: 20px;
+      border-radius: 3px;
+      background: currentColor;
+      opacity: .9;
+    }
+    .mini-kpis {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      margin-bottom: 10px;
+    }
+    .mini-card {
+      border: 1px solid #e1e6ef;
+      border-top: 4px solid #3b74d9;
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,.12);
+      padding: 12px 14px;
+    }
+    .mini-card.ig { border-top-color: #b43f89; }
+    .mini-name {
+      font-size: 10px;
+      color: #6b707b;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+    .mini-num {
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 600;
+      margin-bottom: 7px;
+      color: #3b74d9;
+    }
+    .mini-card.ig .mini-num { color: #b43f89; }
+    .mini-delta { color:#2f7e38; font-size: 12px; font-weight: 600; }
+    .exec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+      margin-bottom: 8px;
+    }
+    .exec-box {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.12);
+      padding: 14px 16px;
+    }
+    .exec-box h3 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 7px;
+    }
+    .exec-list { list-style: none; display: grid; gap: 8px; }
+    .exec-list li { font-size: 12px; color: var(--ink); line-height: 1.45; }
+    .exec-list li + li { border-top: 1px solid var(--line); padding-top: 8px; }
+    .priority-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .prio {
+      border-radius: 4px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-left: 3px solid #0078d4;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .prio strong { display:block; margin-bottom:4px; font-size:11px; letter-spacing:.06em; text-transform:uppercase; }
+    .prio.red { background:#fdf3f3; border-color:#f4abad; border-left-color:#d13438; }
+    .prio.orange { background:#fff9ec; border-color:#ffc83d; border-left-color:#ff8c00; }
+    .prio.green { background:#f1faf1; border-color:#92c353; border-left-color:#107c10; }
+    .prio.blue { background:#eff6fc; border-color:#a9d3f5; border-left-color:#0078d4; }
+    .context-box {
+      border-radius: 4px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      margin-bottom: 10px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .context-box h4 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 6px;
+    }
+    .context-box.blue { background:#eff6fc; border-color:#a9d3f5; }
+    .context-box.blue h4 { color:#0078d4; }
+    .context-box.green { background:#f1faf1; border-color:#92c353; }
+    .context-box.green h4 { color:#107c10; }
+    @media (max-width: 1200px) { .filters, .kpis { grid-template-columns: repeat(3,minmax(0,1fr)); } .grid2{grid-template-columns:1fr;} .community-cards{grid-template-columns:repeat(2,minmax(0,1fr));} .mini-kpis{grid-template-columns:repeat(3,minmax(0,1fr));} }
+    @media (max-width: 720px) {
+      .filters, .kpis { grid-template-columns: 1fr; }
+      .community-cards { grid-template-columns: 1fr; }
+      .mini-kpis { grid-template-columns: 1fr; }
+      .exec-grid { grid-template-columns: 1fr; }
+      .priority-grid { grid-template-columns: 1fr; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-logo { width: 170px; max-width: 100%; }
+      .hero-copy { width: 100%; grid-column: auto; text-align: left; }
+      .hero h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <img class="hero-logo" src="../assets/logo-ts-blanco.png" alt="Teruya Law" />
+      <div class="hero-copy">
+        <h1>Marketing Dashboard</h1>
+        <p>Semana 27 Abril - 04 Mayo 2026</p>
+      </div>
+      <div aria-hidden="true"></div>
+    </section>
+
+    <section class="filters">
+      <div class="filter"><div class="label">Fecha</div><div class="value">27 Abr - 04 May 2026</div></div>
+      <div class="filter"><div class="label">Comparación</div><div class="value">Semana actual vs semana anterior</div></div>
+      <div class="filter"><div class="label">Base</div><div class="value">Desde 01/04/2026</div></div>
+      <div class="filter"><div class="label">Scope</div><div class="value">CEO / Negocio</div></div>
+      <div class="filter"><div class="label">Fuente</div><div class="value">Zoho (oficial) + Social + Google</div></div>
+      <div class="filter"><div class="label">Mailchimp</div><div class="value">Pendiente integrar</div></div>
+    </section>
+
+    <h2 class="section-title">Resumen Ejecutivo</h2>
+    <section class="exec-grid">
+      <article class="exec-box">
+        <h3>Logros Clave del Período</h3>
+        <ul class="exec-list">
+          <li><strong>Datos unificados:</strong> cierre consolidado con Zoho + Google Ads + Facebook + Instagram + TikTok.</li>
+          <li><strong>Comunidad total:</strong> 78.794 seguidores activos entre los tres canales principales.</li>
+          <li><strong>Ads activado en lectura:</strong> $523.31 invertidos, 99 clics y 1.458 impresiones acumuladas.</li>
+          <li><strong>Zoho limpio:</strong> 8 leads reales en corte único, con trazabilidad por fuente y estado.</li>
+        </ul>
+      </article>
+      <article class="exec-box">
+        <h3>Hallazgos y Señales de Alerta</h3>
+        <ul class="exec-list">
+          <li><strong>Conversión comercial baja:</strong> 1 cliente de 8 leads (12,5%) todavía limita retorno del sistema.</li>
+          <li><strong>Facebook:</strong> sube interacción y visitas, pero el clic a enlace sigue bajo para volumen de vistas.</li>
+          <li><strong>Instagram:</strong> crece en alcance e interacción, pero cae fuerte en visualizaciones (-71,5%).</li>
+          <li><strong>TikTok:</strong> crecimiento neto positivo (+45), aún sin señales de intención comercial directa.</li>
+        </ul>
+      </article>
+      <article class="exec-box">
+        <h3>Prioridades Próxima Semana</h3>
+        <div class="priority-grid">
+          <div class="prio red"><strong>Crítico</strong>Subir tasa de contacto de Zoho para evitar enfriamiento de leads nuevos.</div>
+          <div class="prio red"><strong>Crítico</strong>Conectar mejor el tránsito social hacia acción comercial (click, mensaje o formulario).</div>
+          <div class="prio orange"><strong>Importante</strong>Replicar formatos top de Facebook e Instagram con CTA más claro.</div>
+          <div class="prio green"><strong>Oportunidad</strong>Escalar TikTok con los 3 hooks que más vistas concentraron en el corte.</div>
+        </div>
+      </article>
+      <article class="exec-box">
+        <h3>Contexto Estratégico</h3>
+        <div class="context-box blue">
+          <h4>Adquisición ya no es el cuello</h4>
+          El volumen de visibilidad está presente. La brecha principal está en transformar atención en avance comercial medible.
+        </div>
+        <div class="context-box green">
+          <h4>Sistema de medición listo</h4>
+          Con datos cruzados por canal y CRM, ya podemos gestionar por resultados semanales y no por percepción.
+        </div>
+      </article>
+    </section>
+
+    <h2 class="section-title">Resumen de campañas</h2>
+    <section class="kpis">
+      <article class="kpi pink"><div class="name">Inversión Google Ads</div><div class="num">$523.31</div><div class="sub">Acumulado del período exportado</div></article>
+      <article class="kpi white"><div class="name">Leads creados</div><div class="num">8</div><div class="sub">Corte Zoho oficial (archivo unico)</div></article>
+      <article class="kpi gold"><div class="name">Costo por lead</div><div class="num">$130.83</div><div class="sub">Referencia Ads (no conversion final)</div></article>
+      <article class="kpi deep"><div class="name">Contactados</div><div class="num">2</div><div class="sub">25.0% en estado Contacted</div></article>
+      <article class="kpi softblue"><div class="name">Costo por contactado</div><div class="num">$261.66</div><div class="sub">Ads acumulado / 2 en Contacted</div></article>
+      <article class="kpi purple"><div class="name">Consultas iniciales</div><div class="num">2</div><div class="sub">Embudo activo</div></article>
+      <article class="kpi green"><div class="name">Clientes</div><div class="num">1</div><div class="sub">12.5% lead-to-client</div></article>
+    </section>
+
+    <h2 class="section-title">Google Ads Performance</h2>
+    <section class="grid2">
+      <article class="panel">
+        <table>
+          <thead><tr><th>Campaña</th><th>Costo</th><th>Clics</th><th>CTR</th></tr></thead>
+          <tbody>
+            <tr><td>Urgencia ICE Deportacion</td><td>$259.63</td><td>44</td><td>2.27%</td></tr>
+            <tr><td>Tramites</td><td>$263.68</td><td>55</td><td>5.45%</td></tr>
+            <tr><td>Consulta Video</td><td>$0.00</td><td>0</td><td>0.00%</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article class="panel">
+        <table>
+          <thead><tr><th>Métrica</th><th>Valor</th><th>Comparación semanal</th></tr></thead>
+          <tbody>
+            <tr><td>Impresiones</td><td>1,458</td><td>Acumulado</td></tr>
+            <tr><td>Clics</td><td>99</td><td>Acumulado</td></tr>
+            <tr><td>Conversiones Ads</td><td>4.00</td><td>Referencia</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </section>
+
+    <h2 class="section-title">Zoho CRM Lead Performance</h2>
+    <section class="grid2">
+      <article class="panel">
+        <table>
+          <thead><tr><th>Lead Source</th><th>Leads</th><th>Estado Contacted</th><th>Observación</th></tr></thead>
+          <tbody>
+            <tr><td>Zoom Intake (TL-MKT)</td><td>3</td><td>0</td><td>2 en Appointment Scheduling</td></tr>
+            <tr><td>Landing Web (TL-MKT)</td><td>2</td><td>1</td><td>1 Did not hire</td></tr>
+            <tr><td>Teruya Law Web</td><td>1</td><td>0</td><td>Pending Documents (Auto)</td></tr>
+            <tr><td>Marketing</td><td>1</td><td>0</td><td>1 Client</td></tr>
+            <tr><td>Click Funnel queue detenido</td><td>1</td><td>1</td><td>1 Contacted</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article class="panel">
+        <div class="pie-wrap">
+          <div class="pie" aria-label="Distribucion de estados de leads"></div>
+          <div class="legend">
+            <div class="legend-row"><span class="legend-left"><span class="sw" style="background:#4b6cb7"></span>Appointment Scheduling</span><strong>2 · 25.0%</strong></div>
+            <div class="legend-row"><span class="legend-left"><span class="sw" style="background:#2aa876"></span>Contacted</span><strong>2 · 25.0%</strong></div>
+            <div class="legend-row"><span class="legend-left"><span class="sw" style="background:#f39b63"></span>Not Contacted</span><strong>1 · 12.5%</strong></div>
+            <div class="legend-row"><span class="legend-left"><span class="sw" style="background:#9c7bd6"></span>Pending Documents (Auto)</span><strong>1 · 12.5%</strong></div>
+            <div class="legend-row"><span class="legend-left"><span class="sw" style="background:#e25b88"></span>Did not hire</span><strong>1 · 12.5%</strong></div>
+            <div class="legend-row"><span class="legend-left"><span class="sw" style="background:#5f6f82"></span>Client</span><strong>1 · 12.5%</strong></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="community-head">Seguidores Totales por Plataforma - Corte Actual</div>
+    <section class="community-cards">
+      <article class="c-card c-fb">
+        <div class="c-label">Facebook</div>
+        <div class="c-value" style="color:#3b74d9;">41,5 mil</div>
+        <div><span class="c-sub">+8</span><span class="c-note">este período</span></div>
+      </article>
+      <article class="c-card c-ig">
+        <div class="c-label">Instagram</div>
+        <div class="c-value" style="color:#b43f89;">20,4 mil</div>
+        <div><span class="c-sub">+485</span><span class="c-note">este período</span></div>
+      </article>
+      <article class="c-card c-tt">
+        <div class="c-label">TikTok</div>
+        <div class="c-value" style="color:#4e5258;">16.875</div>
+        <div><span class="c-sub">+156</span><span class="c-note">(+0.95%)</span></div>
+      </article>
+      <article class="c-card c-total">
+        <div class="c-label">Total Comunidad</div>
+        <div class="c-value" style="color:#b88b22;">78.794</div>
+        <div class="c-note">Todas las plataformas</div>
+      </article>
+    </section>
+
+    <h2 class="section-title">Channel Performance (Social)</h2>
+
+    <div class="channel-title">Facebook</div>
+    <section class="mini-kpis">
+      <article class="mini-card"><div class="mini-name">FB Visualizaciones</div><div class="mini-num">3.500</div><div class="mini-delta">-0,1% vs período anterior</div></article>
+      <article class="mini-card"><div class="mini-name">FB Espectadores</div><div class="mini-num">1.400</div><div class="mini-delta">+30,5%</div></article>
+      <article class="mini-card"><div class="mini-name">FB Interacciones</div><div class="mini-num">43</div><div class="mini-delta">+38,7%</div></article>
+      <article class="mini-card"><div class="mini-name">FB Seguidores nuevos</div><div class="mini-num">8</div><div class="mini-delta">+14,3%</div></article>
+      <article class="mini-card"><div class="mini-name">FB Visitas perfil</div><div class="mini-num">119</div><div class="mini-delta">+20,2%</div></article>
+      <article class="mini-card"><div class="mini-name">FB Clics enlace</div><div class="mini-num">1</div><div class="mini-delta">+100%</div></article>
+    </section>
+
+    <div class="channel-title">Facebook - Top Publicaciones</div>
+    <section class="panel">
+      <table>
+        <thead><tr><th>Fecha</th><th>Tipo</th><th>Publicación</th><th>Vistas</th><th>Likes</th><th>Coment.</th><th>Compartidos</th><th>Nota</th></tr></thead>
+        <tbody>
+          <tr><td>29/04</td><td>Foto cruzada</td><td>¡Atención comunidad! A pa...</td><td>1.087</td><td>268</td><td>0</td><td>0</td><td>Mayor alcance de la semana</td></tr>
+          <tr><td>28/04</td><td>Reel cruzado</td><td>Un control policial puede pa...</td><td>934</td><td>161</td><td>0</td><td>0</td><td>Top visualizaciones</td></tr>
+          <tr><td>02/05</td><td>Reel cruzado</td><td>En inmigración hay pregunt...</td><td>806</td><td>100</td><td>0</td><td>0</td><td>Buen volumen orgánico</td></tr>
+          <tr><td>29/04</td><td>Reel</td><td>Las estafas migratorias son cada...</td><td>720</td><td>14</td><td>2</td><td>0</td><td>Mayor comentario cualitativo</td></tr>
+          <tr><td>28/04</td><td>Foto cruzada</td><td>¡Orlando se respeta y la victori...</td><td>446</td><td>135</td><td>1</td><td>1</td><td>Única con compartido</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="channel-title ig">Instagram</div>
+    <section class="mini-kpis">
+      <article class="mini-card ig"><div class="mini-name">IG Visualizaciones</div><div class="mini-num">4,2 mil</div><div class="mini-delta">-71,5%</div></article>
+      <article class="mini-card ig"><div class="mini-name">IG Alcance</div><div class="mini-num">838</div><div class="mini-delta">+6,8%</div></article>
+      <article class="mini-card ig"><div class="mini-name">IG Interacciones</div><div class="mini-num">2 mil</div><div class="mini-delta">+24,2%</div></article>
+      <article class="mini-card ig"><div class="mini-name">IG Clics enlace</div><div class="mini-num">0</div><div class="mini-delta">0%</div></article>
+      <article class="mini-card ig"><div class="mini-name">IG Visitas perfil</div><div class="mini-num">48</div><div class="mini-delta">+17,1%</div></article>
+      <article class="mini-card ig"><div class="mini-name">IG Seguidores</div><div class="mini-num">485</div><div class="mini-delta">+29,7%</div></article>
+    </section>
+
+    <div class="channel-title ig">Instagram - Top Publicaciones</div>
+    <section class="panel">
+      <table>
+        <thead><tr><th>Fecha</th><th>Tipo</th><th>Publicación</th><th>Vistas</th><th>Alcance</th><th>Likes</th><th>Compart.</th><th>Guardados</th><th>Nota</th></tr></thead>
+        <tbody>
+          <tr><td>29/04</td><td>Foto cruzada</td><td>¡Atención comunidad! A pa...</td><td>1.091</td><td>213</td><td>268</td><td>0</td><td>1</td><td>Mayor alcance del corte</td></tr>
+          <tr><td>28/04</td><td>Reel cruzado</td><td>Un control policial puede pa...</td><td>934</td><td>309</td><td>161</td><td>0</td><td>1</td><td>Top visualizaciones</td></tr>
+          <tr><td>29/04</td><td>Reel</td><td>Las estafas migratorias son cada...</td><td>824</td><td>308</td><td>208</td><td>1</td><td>1</td><td>Más interacciones y compartido</td></tr>
+          <tr><td>02/05</td><td>Reel cruzado</td><td>En inmigración hay pregunt...</td><td>806</td><td>232</td><td>100</td><td>0</td><td>0</td><td>Volumen alto sostenido</td></tr>
+          <tr><td>28/04</td><td>Foto cruzada</td><td>¡Orlando se respeta y la victori...</td><td>446</td><td>147</td><td>135</td><td>1</td><td>0</td><td>Alto ratio de engagement</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="channel-title" style="color:#5d6066;">TikTok</div>
+    <section class="mini-kpis">
+      <article class="mini-card" style="border-top-color:#5d6066;"><div class="mini-name">TK Visualizaciones</div><div class="mini-num" style="color:#5d6066;">923</div><div class="mini-delta">26 abr - 2 may</div></article>
+      <article class="mini-card" style="border-top-color:#5d6066;"><div class="mini-name">TK Alcance</div><div class="mini-num" style="color:#5d6066;">492</div><div class="mini-delta">Acumulado período</div></article>
+      <article class="mini-card" style="border-top-color:#5d6066;"><div class="mini-name">TK Vistas perfil</div><div class="mini-num" style="color:#5d6066;">5</div><div class="mini-delta">Acumulado período</div></article>
+      <article class="mini-card" style="border-top-color:#5d6066;"><div class="mini-name">TK Interacciones</div><div class="mini-num" style="color:#5d6066;">31</div><div class="mini-delta">30 likes + 1 compartido</div></article>
+      <article class="mini-card" style="border-top-color:#5d6066;"><div class="mini-name">TK Crecimiento neto</div><div class="mini-num" style="color:#5d6066;">+45</div><div class="mini-delta">118 nuevos - 73 bajas</div></article>
+      <article class="mini-card" style="border-top-color:#5d6066;"><div class="mini-name">TK Comentarios</div><div class="mini-num" style="color:#5d6066;">0</div><div class="mini-delta">Sin comentarios en corte</div></article>
+    </section>
+
+    <div class="channel-title" style="color:#5d6066;">TikTok - Top Videos</div>
+    <section class="panel">
+      <table>
+        <thead><tr><th>Fecha</th><th>Video</th><th>Vistas</th><th>Likes</th><th>Comentarios</th><th>Compart.</th><th>Favoritos</th><th>Nota</th></tr></thead>
+        <tbody>
+          <tr><td>29/04</td><td>Las estafas migratorias son cada vez más difíciles de detectar</td><td>221</td><td>15</td><td>0</td><td>1</td><td>2</td><td>Video #1 del período</td></tr>
+          <tr><td>29/04</td><td>Un control policial puede pasar en cualquier momento</td><td>189</td><td>10</td><td>0</td><td>0</td><td>0</td><td>Segundo en visualizaciones</td></tr>
+          <tr><td>28/04</td><td>No pongas tu caso en manos equivocadas</td><td>180</td><td>4</td><td>0</td><td>0</td><td>1</td><td>Tema de prevención con tracción</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <p class="foot">Regla de lectura: Google Ads se muestra como acumulado del período exportado. La conversión oficial de negocio para dirección se toma desde Zoho CRM.</p>
+  </main>
+</body>
+</html>
