@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CEO Marketing Dashboard · Semana 27 Abr–04 May 2026 · Teruya Law</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2333;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --blue: #1f6feb;
+      --blue-light: #58a6ff;
+      --green: #3fb950;
+      --green-dim: #1a3a20;
+      --red: #f85149;
+      --red-dim: #3b1010;
+      --orange: #e3b341;
+      --orange-dim: #3b2d0f;
+      --purple: #bc8cff;
+      --purple-dim: #2d1e42;
+      --pink: #e25b88;
+      --gold: #d4a017;
+      --radius: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+      min-height: 100vh;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 20px; }
+    .topbar img { height: 36px; }
+    .topbar-title { font-size: 15px; font-weight: 600; color: var(--text); }
+    .topbar-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 5px 12px;
+      font-size: 11px; font-weight: 600; color: var(--muted);
+    }
+    .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); }
+
+    /* ── HEALTH SCORE ── */
+    .health-bar {
+      background: linear-gradient(90deg, var(--surface) 0%, var(--surface2) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 28px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .health-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+    .health-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      border-radius: 20px; padding: 4px 12px;
+      font-size: 11px; font-weight: 700;
+      border: 1px solid;
+    }
+    .pill.green { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+    .pill.orange { background: var(--orange-dim); border-color: var(--orange); color: var(--orange); }
+    .pill.red { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+    .pill.blue { background: #0d2045; border-color: var(--blue-light); color: var(--blue-light); }
+
+    .score-box {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .score-ring-wrap { position: relative; width: 48px; height: 48px; }
+    .score-ring-wrap svg { position: absolute; top: 0; left: 0; }
+    .score-center {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: var(--orange);
+    }
+    .score-meta { line-height: 1.3; }
+    .score-meta strong { font-size: 14px; color: var(--text); }
+    .score-meta span { font-size: 11px; color: var(--muted); display: block; }
+
+    /* ── MAIN CONTENT ── */
+    .main { padding: 20px 28px; display: grid; gap: 18px; }
+
+    /* ── SECTION HEADER ── */
+    .sec-head {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px; margin-bottom: 2px;
+    }
+    .sec-head::before {
+      content: "";
+      width: 3px; height: 14px; border-radius: 2px;
+      background: var(--blue-light);
+      flex-shrink: 0;
+    }
+    .sec-head.green::before { background: var(--green); }
+    .sec-head.purple::before { background: var(--purple); }
+    .sec-head.orange::before { background: var(--orange); }
+    .sec-head.pink::before { background: var(--pink); }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .card-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    /* ── KPI GRID ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 14px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .15s;
+    }
+    .kpi-card:hover { border-color: var(--blue); }
+    .kpi-card::before {
+      content: "";
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .kpi-card.c-blue::before { background: var(--blue-light); }
+    .kpi-card.c-green::before { background: var(--green); }
+    .kpi-card.c-orange::before { background: var(--orange); }
+    .kpi-card.c-red::before { background: var(--red); }
+    .kpi-card.c-purple::before { background: var(--purple); }
+    .kpi-card.c-pink::before { background: var(--pink); }
+    .kpi-card.c-gold::before { background: var(--gold); }
+
+    .kpi-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--muted); margin-bottom: 10px;
+    }
+    .kpi-value {
+      font-size: 28px; font-weight: 700; line-height: 1;
+      margin-bottom: 8px;
+    }
+    .kpi-card.c-blue .kpi-value { color: var(--blue-light); }
+    .kpi-card.c-green .kpi-value { color: var(--green); }
+    .kpi-card.c-orange .kpi-value { color: var(--orange); }
+    .kpi-card.c-red .kpi-value { color: var(--red); }
+    .kpi-card.c-purple .kpi-value { color: var(--purple); }
+    .kpi-card.c-pink .kpi-value { color: var(--pink); }
+    .kpi-card.c-gold .kpi-value { color: var(--gold); }
+
+    .kpi-delta {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 600; padding: 2px 7px;
+      border-radius: 10px;
+    }
+    .kpi-delta.up { background: var(--green-dim); color: var(--green); }
+    .kpi-delta.down { background: var(--red-dim); color: var(--red); }
+    .kpi-delta.neutral { background: var(--surface2); color: var(--muted); }
+    .kpi-sub { font-size: 10px; color: var(--muted); margin-top: 6px; }
+
+    /* ── 2-COL LAYOUT ── */
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .row3 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; }
+    .row3r { display: grid; grid-template-columns: 1fr 1.6fr; gap: 14px; }
+
+    /* ── FUNNEL ── */
+    .funnel-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px 0;
+    }
+    .funnel-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .funnel-bar-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .funnel-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .funnel-bar {
+      height: 38px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      transition: width .6s ease;
+      position: relative;
+      white-space: nowrap;
+    }
+    .funnel-label {
+      min-width: 140px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--muted);
+      text-align: right;
+    }
+    .funnel-meta {
+      min-width: 80px;
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .funnel-conv {
+      font-size: 10px;
+      color: var(--muted);
+      padding-left: 4px;
+    }
+    .funnel-arrow {
+      text-align: center;
+      color: var(--border);
+      font-size: 16px;
+      padding: 1px 0;
+      margin-left: 152px;
+    }
+
+    /* ── TABLE ── */
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left;
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .08em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding: 0 10px 8px;
+    }
+    td {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface2); }
+    .td-num { font-weight: 700; font-size: 13px; }
+    .td-green { color: var(--green); }
+    .td-red { color: var(--red); }
+    .td-orange { color: var(--orange); }
+    .td-muted { color: var(--muted); }
+    .td-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    /* ── STAT ROWS ── */
+    .stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+    .stat-item {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .stat-name { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; font-weight: 700; margin-bottom: 6px; }
+    .stat-val { font-size: 20px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+    .stat-delta { font-size: 11px; font-weight: 600; }
+    .stat-delta.up { color: var(--green); }
+    .stat-delta.down { color: var(--red); }
+    .stat-delta.neutral { color: var(--muted); }
+
+    /* ── COMMUNITY BARS ── */
+    .community-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+    .comm-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      border-top-width: 3px;
+    }
+    .comm-card.fb { border-top-color: #3b74d9; }
+    .comm-card.ig { border-top-color: #e1306c; }
+    .comm-card.tk { border-top-color: #69c9d0; }
+    .comm-card.total { border-top-color: var(--gold); }
+    .comm-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; }
+    .comm-value { font-size: 32px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+    .comm-card.fb .comm-value { color: #3b74d9; }
+    .comm-card.ig .comm-value { color: #e1306c; }
+    .comm-card.tk .comm-value { color: #69c9d0; }
+    .comm-card.total .comm-value { color: var(--gold); }
+    .comm-growth { font-size: 12px; font-weight: 700; color: var(--green); }
+    .comm-pct { font-size: 11px; color: var(--muted); }
+
+    /* ── PRIORITIES ── */
+    .prio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .prio-item {
+      border-radius: 8px;
+      padding: 14px;
+      border: 1px solid;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .prio-item.critical { background: var(--red-dim); border-color: #5a1a1a; }
+    .prio-item.important { background: var(--orange-dim); border-color: #4a3500; }
+    .prio-item.opportunity { background: var(--green-dim); border-color: #1a3a20; }
+    .prio-item.strategic { background: #0d2045; border-color: #1a3060; }
+    .prio-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .prio-content strong {
+      display: block;
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 4px;
+    }
+    .prio-item.critical strong { color: var(--red); }
+    .prio-item.important strong { color: var(--orange); }
+    .prio-item.opportunity strong { color: var(--green); }
+    .prio-item.strategic strong { color: var(--blue-light); }
+    .prio-content p { font-size: 12px; line-height: 1.5; color: var(--text); }
+
+    /* ── INSIGHT BOXES ── */
+    .insight-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .insight {
+      border-radius: 8px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .insight h4 {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 8px;
+    }
+    .insight p { font-size: 12px; line-height: 1.6; color: var(--muted); }
+    .insight.pos h4 { color: var(--green); }
+    .insight.neg h4 { color: var(--red); }
+    .insight.warn h4 { color: var(--orange); }
+    .insight.strat h4 { color: var(--blue-light); }
+
+    /* ── CHART CONTAINER ── */
+    .chart-wrap { position: relative; }
+    .chart-wrap canvas { display: block; }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* ── CHANNEL TAG ── */
+    .ch-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 10px; font-weight: 700;
+    }
+    .ch-tag.fb { background: #1a2a4a; color: #3b74d9; }
+    .ch-tag.ig { background: #3a0e1e; color: #e1306c; }
+    .ch-tag.tk { background: #0e2a2c; color: #69c9d0; }
+    .ch-tag.ads { background: #0d2045; color: var(--blue-light); }
+
+    /* ── PROGRESS BAR ── */
+    .prog-wrap { margin-top: 8px; }
+    .prog-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .prog-label { min-width: 120px; font-size: 11px; color: var(--muted); }
+    .prog-bar-bg { flex: 1; height: 6px; background: var(--surface2); border-radius: 10px; overflow: hidden; }
+    .prog-bar-fill { height: 100%; border-radius: 10px; transition: width .6s; }
+    .prog-val { min-width: 40px; text-align: right; font-size: 11px; font-weight: 700; color: var(--text); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1200px) {
+      .kpi-grid { grid-template-columns: repeat(4,1fr); }
+      .row2, .row3, .row3r { grid-template-columns: 1fr; }
+      .community-grid { grid-template-columns: repeat(2,1fr); }
+      .prio-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .kpi-grid { grid-template-columns: repeat(2,1fr); }
+      .community-grid { grid-template-columns: 1fr; }
+      .stat-grid { grid-template-columns: 1fr; }
+      .insight-row { grid-template-columns: 1fr; }
+      .topbar { padding: 0 14px; }
+      .main { padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     TOPBAR
+═══════════════════════════════════════════════════════ -->
+<header class="topbar">
+  <div class="topbar-left">
+    <img src="../assets/logo-ts-blanco.png" alt="Teruya Law" onerror="this.style.display='none'" />
+    <div>
+      <div class="topbar-title">Marketing Dashboard</div>
+      <div class="topbar-sub">Semana 27 Abril – 04 Mayo 2026 · Reporte oficial de rendimiento</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span class="badge"><span class="dot"></span>Zoho + Google Ads + Social</span>
+    <span class="badge">📅 Corte: 04 May 2026</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════
+     HEALTH BAR
+═══════════════════════════════════════════════════════ -->
+<div class="health-bar">
+  <span class="health-label">Estado del sistema</span>
+  <div class="health-pills">
+    <span class="pill green">✓ Ads activos</span>
+    <span class="pill green">✓ CRM Zoho</span>
+    <span class="pill green">✓ Social conectado</span>
+    <span class="pill orange">⚠ Mailchimp pendiente</span>
+    <span class="pill orange">⚠ Meta Ads sin datos</span>
+    <span class="pill red">✗ PI pausada</span>
+  </div>
+  <div class="score-box">
+    <div class="score-ring-wrap">
+      <svg width="48" height="48" viewBox="0 0 48 48">
+        <circle cx="24" cy="24" r="20" fill="none" stroke="#30363d" stroke-width="5"/>
+        <circle cx="24" cy="24" r="20" fill="none" stroke="#e3b341" stroke-width="5"
+          stroke-dasharray="75.4 125.6"
+          stroke-linecap="round"
+          transform="rotate(-90 24 24)"/>
+      </svg>
+      <div class="score-center">60</div>
+    </div>
+    <div class="score-meta">
+      <strong>Score de salud</strong>
+      <span>60/100 · Estable con alertas</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     MAIN
+═══════════════════════════════════════════════════════ -->
+<main class="main">
+
+  <!-- KPI ROW -->
+  <div>
+    <div class="sec-head">Indicadores Clave del Período</div>
+    <div class="kpi-grid">
+
+      <div class="kpi-card c-pink">
+        <div class="kpi-label">Inversión Google Ads</div>
+        <div class="kpi-value">$523</div>
+        <span class="kpi-delta neutral">Acumulado</span>
+        <div class="kpi-sub">2 campañas activas · $66/día</div>
+      </div>
+
+      <div class="kpi-card c-blue">
+        <div class="kpi-label">Leads generados</div>
+        <div class="kpi-value">8</div>
+        <span class="kpi-delta neutral">Corte Zoho</span>
+        <div class="kpi-sub">5 fuentes distintas</div>
+      </div>
+
+      <div class="kpi-card c-orange">
+        <div class="kpi-label">Costo por lead</div>
+        <div class="kpi-value">$131</div>
+        <span class="kpi-delta neutral">Referencia Ads</span>
+        <div class="kpi-sub">$523 / 4 conv. Ads</div>
+      </div>
+
+      <div class="kpi-card c-purple">
+        <div class="kpi-label">Tasa contacto</div>
+        <div class="kpi-value">25%</div>
+        <span class="kpi-delta down">▼ Meta: 60%</span>
+        <div class="kpi-sub">2 de 8 leads contactados</div>
+      </div>
+
+      <div class="kpi-card c-blue">
+        <div class="kpi-label">Consultas iniciales</div>
+        <div class="kpi-value">2</div>
+        <span class="kpi-delta neutral">25% de leads</span>
+        <div class="kpi-sub">Embudo activo</div>
+      </div>
+
+      <div class="kpi-card c-green">
+        <div class="kpi-label">Clientes cerrados</div>
+        <div class="kpi-value">1</div>
+        <span class="kpi-delta neutral">12.5% l→c</span>
+        <div class="kpi-sub">CPAc: $523 / cliente</div>
+      </div>
+
+      <div class="kpi-card c-gold">
+        <div class="kpi-label">Comunidad total</div>
+        <div class="kpi-value">78.8k</div>
+        <span class="kpi-delta up">▲ +649</span>
+        <div class="kpi-sub">FB + IG + TikTok</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FUNNEL + LEAD STATUS -->
+  <div class="row3">
+
+    <!-- FUNNEL -->
+    <div class="card">
+      <div class="card-title">Embudo de conversión · 27 Abr – 04 May 2026</div>
+      <div class="funnel-wrap">
+
+        <div class="funnel-step">
+          <div class="funnel-label">Impresiones</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="background: linear-gradient(90deg,#1f4e8c,#2563a8); width:100%;">
+              1,458
+            </div>
+          </div>
+          <div class="funnel-meta td-muted">100%</div>
+        </div>
+        <div class="funnel-arrow">↓ <span style="font-size:10px; color:var(--muted);">CTR 6.79%</span></div>
+
+        <div class="funnel-step">
+          <div class="funnel-label">Clics</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="background: linear-gradient(90deg,#1a4a7a,#2260a0); width:6.79%;">
+              99
+            </div>
+          </div>
+          <div class="funnel-meta td-muted">6.8%</div>
+        </div>
+        <div class="funnel-arrow">↓ <span style="font-size:10px; color:var(--muted);">Conv. 4.04%</span></div>
+
+        <div class="funnel-step">
+          <div class="funnel-label">Conv. Ads</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="background: linear-gradient(90deg,#3b4fc8,#5a6ee0); width:0.55%;">4</div>
+          </div>
+          <div class="funnel-meta" style="color:var(--blue-light);">0.3%</div>
+        </div>
+        <div class="funnel-arrow">↓ <span style="font-size:10px; color:var(--muted);">Zoho CRM</span></div>
+
+        <div class="funnel-step">
+          <div class="funnel-label">Leads CRM</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="background: linear-gradient(90deg,#7c3aed,#9333ea); width:0.55%;">8</div>
+          </div>
+          <div class="funnel-meta" style="color:var(--purple);">0.5%</div>
+        </div>
+        <div class="funnel-arrow">↓ <span style="font-size:10px; color:var(--muted);">Contacto: 25%</span></div>
+
+        <div class="funnel-step">
+          <div class="funnel-label">Contactados</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="background: linear-gradient(90deg,#1f7a4f,#25a063); width:0.137%;">2</div>
+          </div>
+          <div class="funnel-meta" style="color:var(--green);">0.14%</div>
+        </div>
+        <div class="funnel-arrow">↓ <span style="font-size:10px; color:var(--muted);">Consulta: 100%</span></div>
+
+        <div class="funnel-step">
+          <div class="funnel-label">Consultas</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="background: linear-gradient(90deg,#b45309,#d97706); width:0.137%;">2</div>
+          </div>
+          <div class="funnel-meta" style="color:var(--orange);">0.14%</div>
+        </div>
+        <div class="funnel-arrow">↓ <span style="font-size:10px; color:var(--muted);">Cierre: 50%</span></div>
+
+        <div class="funnel-step">
+          <div class="funnel-label">Cliente ✓</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="background: linear-gradient(90deg,#15803d,#16a34a); width:0.069%;">1</div>
+          </div>
+          <div class="funnel-meta" style="color:var(--green); font-weight:700;">0.07%</div>
+        </div>
+
+      </div>
+      <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border); display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; text-align:center;">
+        <div>
+          <div style="font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:4px;">Lead → Cliente</div>
+          <div style="font-size:22px; font-weight:700; color:var(--green);">12.5%</div>
+        </div>
+        <div>
+          <div style="font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:4px;">CPA real (Ads→Cliente)</div>
+          <div style="font-size:22px; font-weight:700; color:var(--pink);">$523</div>
+        </div>
+        <div>
+          <div style="font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:4px;">Cuello de botella</div>
+          <div style="font-size:14px; font-weight:700; color:var(--red); line-height:1.3;">Contacto<br>inicial</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEAD STATUS CHART -->
+    <div class="card">
+      <div class="card-title">Distribución de leads · Zoho CRM</div>
+      <div class="chart-wrap" style="height:220px;">
+        <canvas id="leadChart"></canvas>
+      </div>
+      <div class="prog-wrap" style="margin-top:14px;">
+        <div class="prog-row">
+          <span class="prog-label">Appointment Sched.</span>
+          <div class="prog-bar-bg"><div class="prog-bar-fill" style="width:25%; background:#4b6cb7;"></div></div>
+          <span class="prog-val">2</span>
+        </div>
+        <div class="prog-row">
+          <span class="prog-label">Contacted</span>
+          <div class="prog-bar-bg"><div class="prog-bar-fill" style="width:25%; background:#2aa876;"></div></div>
+          <span class="prog-val">2</span>
+        </div>
+        <div class="prog-row">
+          <span class="prog-label">Not Contacted</span>
+          <div class="prog-bar-bg"><div class="prog-bar-fill" style="width:12.5%; background:#f39b63;"></div></div>
+          <span class="prog-val">1</span>
+        </div>
+        <div class="prog-row">
+          <span class="prog-label">Pending Docs</span>
+          <div class="prog-bar-bg"><div class="prog-bar-fill" style="width:12.5%; background:#9c7bd6;"></div></div>
+          <span class="prog-val">1</span>
+        </div>
+        <div class="prog-row">
+          <span class="prog-label">Did Not Hire</span>
+          <div class="prog-bar-bg"><div class="prog-bar-fill" style="width:12.5%; background:#e25b88;"></div></div>
+          <span class="prog-val">1</span>
+        </div>
+        <div class="prog-row">
+          <span class="prog-label">Client ✓</span>
+          <div class="prog-bar-bg"><div class="prog-bar-fill" style="width:12.5%; background:#3fb950;"></div></div>
+          <span class="prog-val">1</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GOOGLE ADS -->
+  <div>
+    <div class="sec-head blue">Google Ads Performance</div>
+    <div class="row2">
+
+      <div class="card">
+        <div class="card-title">Gasto por campaña (acumulado del período)</div>
+        <div class="chart-wrap" style="height:200px;">
+          <canvas id="adsChart"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Detalle de campañas</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Campaña</th>
+              <th>Costo</th>
+              <th>Clics</th>
+              <th>CTR</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div style="font-weight:600; margin-bottom:2px;">Urgencia ICE Deportacion</div>
+                <div style="font-size:10px; color:var(--muted);">Search · Inmigración · SP+EN</div>
+              </td>
+              <td class="td-num">$259.63</td>
+              <td class="td-num">44</td>
+              <td><span style="color:var(--orange);">2.27%</span></td>
+              <td><span class="td-badge" style="background:var(--green-dim); color:var(--green);">Activa</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div style="font-weight:600; margin-bottom:2px;">Trámites Migratorios</div>
+                <div style="font-size:10px; color:var(--muted);">Search · Alta intención</div>
+              </td>
+              <td class="td-num">$263.68</td>
+              <td class="td-num">55</td>
+              <td><span style="color:var(--green);">5.45%</span></td>
+              <td><span class="td-badge" style="background:var(--green-dim); color:var(--green);">Activa</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div style="font-weight:600; margin-bottom:2px;">Consulta Video</div>
+                <div style="font-size:10px; color:var(--muted);">Video · Awareness</div>
+              </td>
+              <td class="td-num td-muted">$0.00</td>
+              <td class="td-num td-muted">0</td>
+              <td class="td-muted">0.00%</td>
+              <td><span class="td-badge" style="background:var(--orange-dim); color:var(--orange);">Sin datos</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div style="font-weight:600; margin-bottom:2px;">Personal Injury</div>
+                <div style="font-size:10px; color:var(--muted);">⚠ Presupuesto disparado a $13K</div>
+              </td>
+              <td class="td-muted">—</td>
+              <td class="td-muted">—</td>
+              <td class="td-muted">—</td>
+              <td><span class="td-badge" style="background:var(--red-dim); color:var(--red);">Pausada</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:12px; padding-top:10px; border-top:1px solid var(--border); display:grid; grid-template-columns:repeat(3,1fr); gap:8px; text-align:center;">
+          <div>
+            <div style="font-size:10px; color:var(--muted); margin-bottom:3px;">Total Impresiones</div>
+            <div style="font-size:18px; font-weight:700;">1,458</div>
+          </div>
+          <div>
+            <div style="font-size:10px; color:var(--muted); margin-bottom:3px;">Total Clics</div>
+            <div style="font-size:18px; font-weight:700; color:var(--blue-light);">99</div>
+          </div>
+          <div>
+            <div style="font-size:10px; color:var(--muted); margin-bottom:3px;">Conv. registradas</div>
+            <div style="font-size:18px; font-weight:700; color:var(--purple);">4.00</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZOHO LEAD SOURCES -->
+  <div>
+    <div class="sec-head orange">Zoho CRM · Fuentes de Leads</div>
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Fuente</th>
+            <th>Leads</th>
+            <th>Contactados</th>
+            <th>Estado actual</th>
+            <th>Tasa contacto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="ch-tag ads">Zoom Intake (TL-MKT)</span></td>
+            <td class="td-num">3</td>
+            <td class="td-num td-muted">0</td>
+            <td style="font-size:11px; color:var(--orange);">2 en Appointment Scheduling</td>
+            <td><span style="color:var(--red); font-weight:700;">0%</span></td>
+          </tr>
+          <tr>
+            <td><span class="ch-tag ads">Landing Web (TL-MKT)</span></td>
+            <td class="td-num">2</td>
+            <td class="td-num td-green">1</td>
+            <td style="font-size:11px; color:var(--muted);">1 Did not hire</td>
+            <td><span style="color:var(--orange); font-weight:700;">50%</span></td>
+          </tr>
+          <tr>
+            <td><span class="ch-tag ads">Teruya Law Web</span></td>
+            <td class="td-num">1</td>
+            <td class="td-num td-muted">0</td>
+            <td style="font-size:11px; color:var(--muted);">Pending Documents (Auto)</td>
+            <td><span style="color:var(--red); font-weight:700;">0%</span></td>
+          </tr>
+          <tr>
+            <td><span class="ch-tag ads">Marketing</span></td>
+            <td class="td-num">1</td>
+            <td class="td-num td-muted">0</td>
+            <td style="font-size:11px; color:var(--green);">1 Client ✓</td>
+            <td><span style="color:var(--green); font-weight:700;">—</span></td>
+          </tr>
+          <tr>
+            <td><span class="ch-tag ads">ClickFunnel queue</span></td>
+            <td class="td-num">1</td>
+            <td class="td-num td-green">1</td>
+            <td style="font-size:11px; color:var(--green);">1 Contacted</td>
+            <td><span style="color:var(--green); font-weight:700;">100%</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- COMMUNITY OVERVIEW -->
+  <div>
+    <div class="sec-head purple">Comunidad · Crecimiento de Seguidores</div>
+    <div class="community-grid">
+      <div class="comm-card fb">
+        <div class="comm-label">Facebook</div>
+        <div class="comm-value">41,500</div>
+        <div class="comm-growth">+8 este período</div>
+        <div class="comm-pct">+14.3% vs anterior</div>
+      </div>
+      <div class="comm-card ig">
+        <div class="comm-label">Instagram</div>
+        <div class="comm-value">20,400</div>
+        <div class="comm-growth">+485 este período</div>
+        <div class="comm-pct">+29.7% de crecimiento</div>
+      </div>
+      <div class="comm-card tk">
+        <div class="comm-label">TikTok</div>
+        <div class="comm-value">16,875</div>
+        <div class="comm-growth">+156 netos</div>
+        <div class="comm-pct">118 nuevos · 73 bajas</div>
+      </div>
+      <div class="comm-card total">
+        <div class="comm-label">Total Comunidad</div>
+        <div class="comm-value">78,794</div>
+        <div class="comm-growth">+649 este período</div>
+        <div class="comm-pct">Crecimiento orgánico sostenido</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL CHARTS -->
+  <div>
+    <div class="sec-head pink">Social Media · Performance por Canal</div>
+    <div class="row2">
+
+      <div class="card">
+        <div class="card-title">Métricas de alcance por plataforma</div>
+        <div class="chart-wrap" style="height:220px;">
+          <canvas id="socialChart"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Tabla comparativa de canales</div>
+        <table>
+          <thead>
+            <tr><th>Métrica</th><th><span class="ch-tag fb">FB</span></th><th><span class="ch-tag ig">IG</span></th><th><span class="ch-tag tk">TK</span></th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Visualizaciones</td>
+              <td class="td-num">3,500</td>
+              <td class="td-num">4,200</td>
+              <td class="td-num">923</td>
+            </tr>
+            <tr>
+              <td>Alcance / espectadores</td>
+              <td class="td-num">1,400</td>
+              <td class="td-num">838</td>
+              <td class="td-num">492</td>
+            </tr>
+            <tr>
+              <td>Interacciones</td>
+              <td class="td-num">43</td>
+              <td class="td-num td-green">2,000</td>
+              <td class="td-num">31</td>
+            </tr>
+            <tr>
+              <td>Nuevos seguidores</td>
+              <td class="td-num">8</td>
+              <td class="td-num td-green">485</td>
+              <td class="td-num">+45 neto</td>
+            </tr>
+            <tr>
+              <td>Visitas perfil</td>
+              <td class="td-num">119</td>
+              <td class="td-num">48</td>
+              <td class="td-num">5</td>
+            </tr>
+            <tr>
+              <td>Clics a enlace</td>
+              <td><span style="color:var(--orange); font-weight:700;">1</span></td>
+              <td><span style="color:var(--red); font-weight:700;">0</span></td>
+              <td class="td-muted">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOP CONTENT -->
+  <div>
+    <div class="sec-head pink">Top Contenido del Período · Publicaciones más efectivas</div>
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Canal</th>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Contenido</th>
+            <th>Vistas</th>
+            <th>Likes</th>
+            <th>Compart.</th>
+            <th>Guardados</th>
+            <th>Señal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="ch-tag ig">IG</span></td>
+            <td>29/04</td>
+            <td>Foto</td>
+            <td>¡Atención comunidad! A partir del...</td>
+            <td class="td-num">1,091</td>
+            <td class="td-num td-green">268</td>
+            <td>0</td>
+            <td>1</td>
+            <td style="font-size:10px; color:var(--green);">Mayor alcance</td>
+          </tr>
+          <tr>
+            <td><span class="ch-tag tk">TK</span></td>
+            <td>29/04</td>
+            <td>Video</td>
+            <td>Las estafas migratorias son cada vez...</td>
+            <td class="td-num">221</td>
+            <td class="td-num">15</td>
+            <td class="td-num td-green">1</td>
+            <td>2</td>
+            <td style="font-size:10px; color:var(--blue-light);">#1 TikTok</td>
+          </tr>
+          <tr>
+            <td><span class="ch-tag fb">FB</span></td>
+            <td>28/04</td>
+            <td>Reel</td>
+            <td>Un control policial puede pasar en...</td>
+            <td class="td-num">934</td>
+            <td class="td-num">161</td>
+            <td>0</td>
+            <td>—</td>
+            <td style="font-size:10px; color:var(--blue-light);">Top visualizaciones FB</td>
+          </tr>
+          <tr>
+            <td><span class="ch-tag ig">IG</span></td>
+            <td>29/04</td>
+            <td>Reel</td>
+            <td>Las estafas migratorias son cada vez...</td>
+            <td class="td-num">824</td>
+            <td class="td-num">208</td>
+            <td class="td-num td-green">1</td>
+            <td>1</td>
+            <td style="font-size:10px; color:var(--purple);">Más compartido IG</td>
+          </tr>
+          <tr>
+            <td><span class="ch-tag fb">FB</span></td>
+            <td>02/05</td>
+            <td>Reel</td>
+            <td>En inmigración hay preguntas que...</td>
+            <td class="td-num">806</td>
+            <td class="td-num">100</td>
+            <td>0</td>
+            <td>—</td>
+            <td style="font-size:10px; color:var(--muted);">Volumen orgánico</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:12px; background:var(--surface2); border-radius:8px; padding:12px; font-size:12px; line-height:1.6; color:var(--muted);">
+        💡 <strong style="color:var(--orange);">Patrón detectado:</strong> El contenido de <strong style="color:var(--text);">estafas migratorias</strong> y <strong style="color:var(--text);">controles policiales</strong> domina el top en los 3 canales. Estos hooks de urgencia y prevención generan el mayor volumen de vistas. Escalar estos temas con CTA directo a consulta.
+      </div>
+    </div>
+  </div>
+
+  <!-- INSIGHTS + PRIORITIES -->
+  <div class="row2">
+
+    <!-- INSIGHTS -->
+    <div class="card">
+      <div class="card-title">Análisis ejecutivo · Señales del período</div>
+      <div class="insight-row">
+        <div class="insight pos">
+          <h4>✓ Lo que está funcionando</h4>
+          <p>Instagram creció +485 seguidores con engagement +24.2%. TikTok suma +45 netos. El contenido de urgencia migratoria tiene alta tracción orgánica en todos los canales. Sistema de medición unificado operativo por primera vez.</p>
+        </div>
+        <div class="insight neg">
+          <h4>✗ Los gaps críticos</h4>
+          <p>Solo 2 de 8 leads fueron contactados (25%). Cero clics a enlace desde Instagram. Zoom Intake generó 3 leads con 0% de contacto real. La atención social no está convirtiendo en acción comercial.</p>
+        </div>
+        <div class="insight warn">
+          <h4>⚠ Tendencias a monitorear</h4>
+          <p>Instagram cayó -71.5% en visualizaciones de video vs. período anterior. El mix de contenido parece estar migrando de Reels virales a formatos de menor alcance. TikTok sin comentarios: falta de conversación con la audiencia.</p>
+        </div>
+        <div class="insight strat">
+          <h4>→ Oportunidad estratégica</h4>
+          <p>Los hooks de estafas y control policial funcionan en los 3 canales. Escalar estos formatos con CTA directo a WhatsApp o consulta puede cerrar el gap entre visibilidad y contacto comercial en las próximas 2 semanas.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRIORITIES -->
+    <div class="card">
+      <div class="card-title">Prioridades · Próxima semana</div>
+      <div class="prio-grid">
+        <div class="prio-item critical">
+          <div class="prio-icon">🚨</div>
+          <div class="prio-content">
+            <strong>Crítico</strong>
+            <p>Subir tasa de contacto de Zoom Intake de 0% a mínimo 60%. Protocolo de respuesta en menos de 2 horas para leads nuevos.</p>
+          </div>
+        </div>
+        <div class="prio-item critical">
+          <div class="prio-icon">🚨</div>
+          <div class="prio-content">
+            <strong>Crítico</strong>
+            <p>Agregar CTA directo (WhatsApp o formulario) en los 5 posts de mayor rendimiento identificados en este corte.</p>
+          </div>
+        </div>
+        <div class="prio-item important">
+          <div class="prio-icon">⚠️</div>
+          <div class="prio-content">
+            <strong>Importante</strong>
+            <p>Replicar los formatos de "estafas migratorias" y "control policial" con variaciones de hook y CTA más agresivo hacia consulta.</p>
+          </div>
+        </div>
+        <div class="prio-item opportunity">
+          <div class="prio-icon">🚀</div>
+          <div class="prio-content">
+            <strong>Oportunidad</strong>
+            <p>Escalar TikTok con los 3 hooks top del período. Objetivo: cruzar 1,500 visualizaciones semanales antes de fin de mayo.</p>
+          </div>
+        </div>
+        <div class="prio-item strategic">
+          <div class="prio-icon">📊</div>
+          <div class="prio-content">
+            <strong>Estratégico</strong>
+            <p>Conectar Mailchimp (14,000 contactos) al sistema de reporte. Activar primera secuencia de email para leads tibios de Zoho.</p>
+          </div>
+        </div>
+        <div class="prio-item strategic">
+          <div class="prio-icon">📋</div>
+          <div class="prio-content">
+            <strong>Estratégico</strong>
+            <p>Definir presupuesto y cap de gasto para reactivar PI campaign con control de bidding estricto. No reactivar sin tope aprobado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div>Teruya Law · Marketing Intelligence · Generado el 04 May 2026</div>
+  <div>Fuentes: Zoho CRM (oficial) · Google Ads · Facebook Insights · Instagram Insights · TikTok Analytics</div>
+  <div>Mailchimp: pendiente integrar · Meta Ads: pendiente conectar</div>
+</footer>
+
+<script>
+  // ── Lead Status Doughnut ──
+  (function() {
+    const ctx = document.getElementById('leadChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Appointment Sched.', 'Contacted', 'Not Contacted', 'Pending Docs', 'Did Not Hire', 'Client ✓'],
+        datasets: [{
+          data: [2, 2, 1, 1, 1, 1],
+          backgroundColor: ['#4b6cb7','#2aa876','#f39b63','#9c7bd6','#e25b88','#3fb950'],
+          borderColor: '#161b22',
+          borderWidth: 3,
+          hoverOffset: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '68%',
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                return ` ${ctx.label}: ${ctx.parsed} leads (${(ctx.parsed/8*100).toFixed(0)}%)`;
+              }
+            }
+          }
+        }
+      }
+    });
+  })();
+
+  // ── Google Ads Bar Chart ──
+  (function() {
+    const ctx = document.getElementById('adsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Urgencia ICE\nDeportacion', 'Trámites\nMigratorios', 'Consulta\nVideo'],
+        datasets: [
+          {
+            label: 'Inversión ($)',
+            data: [259.63, 263.68, 0],
+            backgroundColor: ['#1f4e8c','#1f6feb','#30363d'],
+            borderRadius: 6,
+            yAxisID: 'y',
+          },
+          {
+            label: 'Clics',
+            data: [44, 55, 0],
+            backgroundColor: ['#7c3aed99','#9333ea99','#30363d'],
+            borderRadius: 6,
+            yAxisID: 'y1',
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index' },
+        scales: {
+          x: {
+            grid: { color: '#30363d' },
+            ticks: { color: '#8b949e', font: { size: 11 } }
+          },
+          y: {
+            type: 'linear',
+            position: 'left',
+            grid: { color: '#30363d' },
+            ticks: { color: '#58a6ff', font: { size: 10 }, callback: v => '$' + v }
+          },
+          y1: {
+            type: 'linear',
+            position: 'right',
+            grid: { drawOnChartArea: false },
+            ticks: { color: '#bc8cff', font: { size: 10 } }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: { color: '#8b949e', font: { size: 11 } }
+          }
+        }
+      }
+    });
+  })();
+
+  // ── Social Radar / Bar Chart ──
+  (function() {
+    const ctx = document.getElementById('socialChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Visualizaciones', 'Espectadores\n/ Alcance', 'Interacciones', 'Nuevos\nseguidores', 'Visitas\nperfil'],
+        datasets: [
+          {
+            label: 'Facebook',
+            data: [3500, 1400, 43, 8, 119],
+            backgroundColor: '#3b74d966',
+            borderColor: '#3b74d9',
+            borderWidth: 2,
+            borderRadius: 4,
+          },
+          {
+            label: 'Instagram',
+            data: [4200, 838, 2000, 485, 48],
+            backgroundColor: '#e1306c55',
+            borderColor: '#e1306c',
+            borderWidth: 2,
+            borderRadius: 4,
+          },
+          {
+            label: 'TikTok',
+            data: [923, 492, 31, 45, 5],
+            backgroundColor: '#69c9d044',
+            borderColor: '#69c9d0',
+            borderWidth: 2,
+            borderRadius: 4,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            grid: { color: '#30363d' },
+            ticks: { color: '#8b949e', font: { size: 10 } }
+          },
+          y: {
+            grid: { color: '#30363d' },
+            ticks: { color: '#8b949e', font: { size: 10 } },
+            type: 'logarithmic',
+          }
+        },
+        plugins: {
+          legend: {
+            labels: { color: '#8b949e', font: { size: 11 }, boxWidth: 12 }
+          }
+        }
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>

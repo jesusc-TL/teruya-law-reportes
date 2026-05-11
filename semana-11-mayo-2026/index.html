@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketing Dashboard · Semana 04–11 Mayo 2026 · Teruya Law</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2333;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --blue: #1f6feb;
+      --blue-light: #58a6ff;
+      --green: #3fb950;
+      --green-dim: #1a3a20;
+      --red: #f85149;
+      --red-dim: #3b1010;
+      --orange: #e3b341;
+      --orange-dim: #3b2d0f;
+      --purple: #bc8cff;
+      --purple-dim: #2d1e42;
+      --pink: #e25b88;
+      --gold: #d4a017;
+      --radius: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+      min-height: 100vh;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 20px; }
+    .topbar img { height: 36px; }
+    .topbar-title { font-size: 15px; font-weight: 600; color: var(--text); }
+    .topbar-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 5px 12px;
+      font-size: 11px; font-weight: 600; color: var(--muted);
+    }
+    .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); }
+
+    /* ── HEALTH BAR ── */
+    .health-bar {
+      background: linear-gradient(90deg, var(--surface) 0%, var(--surface2) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 28px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .health-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+    .health-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      border-radius: 20px; padding: 4px 12px;
+      font-size: 11px; font-weight: 700;
+      border: 1px solid;
+    }
+    .pill.green { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+    .pill.orange { background: var(--orange-dim); border-color: var(--orange); color: var(--orange); }
+    .pill.red { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+    .pill.blue { background: #0d2045; border-color: var(--blue-light); color: var(--blue-light); }
+
+    .score-box {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .score-ring-wrap { position: relative; width: 48px; height: 48px; }
+    .score-ring-wrap svg { position: absolute; top: 0; left: 0; }
+    .score-center {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: var(--green);
+    }
+    .score-meta { line-height: 1.3; }
+    .score-meta strong { font-size: 14px; color: var(--text); }
+    .score-meta span { font-size: 11px; color: var(--muted); display: block; }
+
+    /* ── MAIN CONTENT ── */
+    .main { padding: 20px 28px; display: grid; gap: 18px; }
+
+    /* ── SECTION HEADER ── */
+    .sec-head {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px; margin-bottom: 2px;
+    }
+    .sec-head::before {
+      content: "";
+      width: 3px; height: 14px; border-radius: 2px;
+      background: var(--blue-light);
+      flex-shrink: 0;
+    }
+    .sec-head.green::before { background: var(--green); }
+    .sec-head.purple::before { background: var(--purple); }
+    .sec-head.orange::before { background: var(--orange); }
+    .sec-head.pink::before { background: var(--pink); }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .card-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    /* ── KPI GRID ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 14px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .15s;
+    }
+    .kpi-card:hover { border-color: var(--blue); }
+    .kpi-card::before {
+      content: "";
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .kpi-card.c-blue::before { background: var(--blue-light); }
+    .kpi-card.c-green::before { background: var(--green); }
+    .kpi-card.c-orange::before { background: var(--orange); }
+    .kpi-card.c-red::before { background: var(--red); }
+    .kpi-card.c-purple::before { background: var(--purple); }
+    .kpi-card.c-pink::before { background: var(--pink); }
+    .kpi-card.c-gold::before { background: var(--gold); }
+
+    .kpi-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--muted); margin-bottom: 10px;
+    }
+    .kpi-value {
+      font-size: 28px; font-weight: 700; line-height: 1;
+      margin-bottom: 8px;
+    }
+    .kpi-card.c-blue .kpi-value { color: var(--blue-light); }
+    .kpi-card.c-green .kpi-value { color: var(--green); }
+    .kpi-card.c-orange .kpi-value { color: var(--orange); }
+    .kpi-card.c-red .kpi-value { color: var(--red); }
+    .kpi-card.c-purple .kpi-value { color: var(--purple); }
+    .kpi-card.c-pink .kpi-value { color: var(--pink); }
+    .kpi-card.c-gold .kpi-value { color: var(--gold); }
+
+    .kpi-delta {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 600; padding: 2px 7px;
+      border-radius: 10px;
+    }
+    .kpi-delta.up { background: var(--green-dim); color: var(--green); }
+    .kpi-delta.down { background: var(--red-dim); color: var(--red); }
+    .kpi-delta.neutral { background: var(--surface2); color: var(--muted); }
+    .kpi-sub { font-size: 10px; color: var(--muted); margin-top: 6px; }
+
+    /* ── 2-COL LAYOUT ── */
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .row3 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; }
+
+    /* ── FUNNEL ── */
+    .funnel-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px 0;
+    }
+    .funnel-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .funnel-bar-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .funnel-bar {
+      height: 38px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      transition: width .6s ease;
+      position: relative;
+      white-space: nowrap;
+    }
+    .funnel-label {
+      min-width: 140px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--muted);
+      text-align: right;
+    }
+    .funnel-meta {
+      min-width: 80px;
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .funnel-arrow {
+      text-align: center;
+      color: var(--border);
+      font-size: 16px;
+      padding: 1px 0;
+      margin-left: 152px;
+    }
+
+    /* ── TABLE ── */
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left;
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .08em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding: 0 10px 8px;
+    }
+    td {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface2); }
+    .td-num { font-weight: 700; font-size: 13px; }
+    .td-green { color: var(--green); }
+    .td-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    /* ── PROGRESS BAR ── */
+    .prog-wrap { margin-top: 8px; }
+    .prog-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .prog-label { min-width: 120px; font-size: 11px; color: var(--muted); }
+    .prog-bar-bg { flex: 1; height: 6px; background: var(--surface2); border-radius: 10px; overflow: hidden; }
+    .prog-bar-fill { height: 100%; border-radius: 10px; transition: width .6s; }
+    .prog-val { min-width: 40px; text-align: right; font-size: 11px; font-weight: 700; color: var(--text); }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .ch-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 10px; font-weight: 700;
+    }
+    .ch-tag.ads { background: #0d2045; color: var(--blue-light); }
+
+    /* ── PRIORITIES ── */
+    .prio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .prio-item {
+      border-radius: 8px;
+      padding: 14px;
+      border: 1px solid;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .prio-item.critical { background: var(--red-dim); border-color: #5a1a1a; }
+    .prio-item.opportunity { background: var(--green-dim); border-color: #1a3a20; }
+    .prio-content strong {
+      display: block;
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 4px;
+    }
+    .prio-item.critical strong { color: var(--red); }
+    .prio-item.opportunity strong { color: var(--green); }
+    .prio-content p { font-size: 12px; line-height: 1.5; color: var(--text); }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <img src="../assets/logo-ts-blanco.png" alt="Teruya Law" onerror="this.style.display='none'" />
+    <div>
+      <div class="topbar-title">Marketing Dashboard</div>
+      <div class="topbar-sub">Semana 04 Mayo – 11 Mayo 2026 · Reporte oficial de rendimiento</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span class="badge"><span class="dot"></span>Zoho + Google Ads</span>
+    <span class="badge">📅 Corte: 11 May 2026</span>
+  </div>
+</header>
+
+<div class="health-bar">
+  <span class="health-label">Estado del sistema</span>
+  <div class="health-pills">
+    <span class="pill green">✓ Ads activos</span>
+    <span class="pill green">✓ CRM Zoho</span>
+    <span class="pill green">✓ Landing Web OK</span>
+    <span class="pill orange">⚠ Social Pendiente</span>
+  </div>
+  <div class="score-box">
+    <div class="score-ring-wrap">
+      <svg width="48" height="48" viewBox="0 0 48 48">
+        <circle cx="24" cy="24" r="20" fill="none" stroke="#30363d" stroke-width="5"/>
+        <circle cx="24" cy="24" r="20" fill="none" stroke="#3fb950" stroke-width="5"
+          stroke-dasharray="100.5 125.6"
+          stroke-linecap="round"
+          transform="rotate(-90 24 24)"/>
+      </svg>
+      <div class="score-center">80</div>
+    </div>
+    <div class="score-meta">
+      <strong>Salud Marketing</strong>
+      <span>80/100 · Gran mejora en CPL</span>
+    </div>
+  </div>
+</div>
+
+<main class="main">
+
+  <div>
+    <div class="sec-head">Indicadores Clave del Período</div>
+    <div class="kpi-grid">
+
+      <div class="kpi-card c-pink">
+        <div class="kpi-label">Inversión Google Ads</div>
+        <div class="kpi-value">$452</div>
+        <span class="kpi-delta down">▼ -13%</span>
+        <div class="kpi-sub">$452.31 total semana</div>
+      </div>
+
+      <div class="kpi-card c-blue">
+        <div class="kpi-label">Leads generados</div>
+        <div class="kpi-value">7</div>
+        <span class="kpi-delta neutral">Corte Zoho</span>
+        <div class="kpi-sub">85% via Landing Web</div>
+      </div>
+
+      <div class="kpi-card c-orange">
+        <div class="kpi-label">Costo por lead</div>
+        <div class="kpi-value">$64.6</div>
+        <span class="kpi-delta up">▲ +50% Eficacia</span>
+        <div class="kpi-sub">Antes: $131</div>
+      </div>
+
+      <div class="kpi-card c-purple">
+        <div class="kpi-label">Tasa contacto</div>
+        <div class="kpi-value">57%</div>
+        <span class="kpi-delta up">▲ +32%</span>
+        <div class="kpi-sub">4 de 7 leads con notas</div>
+      </div>
+
+      <div class="kpi-card c-green">
+        <div class="kpi-label">Revenue Real</div>
+        <div class="kpi-value">$1,750</div>
+        <span class="kpi-delta up">▲ Nuevo Cierre</span>
+        <div class="kpi-sub">Venta: Yerica Soto</div>
+      </div>
+
+      <div class="kpi-card c-gold">
+        <div class="kpi-label">Pipeline Firma</div>
+        <div class="kpi-value">$17k</div>
+        <span class="kpi-delta up">▲ Alta Intención</span>
+        <div class="kpi-sub">Hannah Rivera (2 casos)</div>
+      </div>
+
+      <div class="kpi-card c-blue">
+        <div class="kpi-label">Lead to Client</div>
+        <div class="kpi-value">14%</div>
+        <span class="kpi-delta up">▲ +2%</span>
+        <div class="kpi-sub">Conversión final</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row3">
+    <div class="card">
+      <div class="card-title">Embudo de conversión · 04 – 11 Mayo 2026</div>
+      <div class="funnel-wrap">
+        <div class="funnel-step">
+          <div class="funnel-label">Impresiones</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar" style="background: linear-gradient(90deg,#1f4e8c,#2563a8); width:100%;">1,726</div></div>
+          <div class="funnel-meta">100%</div>
+        </div>
+        <div class="funnel-arrow">↓ <span style="font-size:10px; color:var(--muted);">CTR 4.98%</span></div>
+        <div class="funnel-step">
+          <div class="funnel-label">Clics</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar" style="background: linear-gradient(90deg,#1a4a7a,#2260a0); width:4.98%;">86</div></div>
+          <div class="funnel-meta">5.0%</div>
+        </div>
+        <div class="funnel-arrow">↓ <span style="font-size:10px; color:var(--muted);">Conv. 8.13%</span></div>
+        <div class="funnel-step">
+          <div class="funnel-label">Leads CRM</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar" style="background: linear-gradient(90deg,#7c3aed,#9333ea); width:0.4%;">7</div></div>
+          <div class="funnel-meta">0.4%</div>
+        </div>
+        <div class="funnel-arrow">↓ <span style="font-size:10px; color:var(--muted);">Contacto: 57%</span></div>
+        <div class="funnel-step">
+          <div class="funnel-label">Contactados</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar" style="background: linear-gradient(90deg,#1f7a4f,#25a063); width:0.23%;">4</div></div>
+          <div class="funnel-meta">0.2%</div>
+        </div>
+        <div class="funnel-arrow">↓ <span style="font-size:10px; color:var(--muted);">Cierre: 25%</span></div>
+        <div class="funnel-step">
+          <div class="funnel-label">Cliente ✓</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar" style="background: linear-gradient(90deg,#15803d,#16a34a); width:0.06%;">1</div></div>
+          <div class="funnel-meta">0.06%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Distribución de leads · Zoho CRM</div>
+      <div class="chart-wrap" style="height:220px;"><canvas id="leadChart"></canvas></div>
+      <div class="prog-wrap" style="margin-top:14px;">
+        <div class="prog-row"><span class="prog-label">Client ✓</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:14%; background:#3fb950;"></div></div><span class="prog-val">1</span></div>
+        <div class="prog-row"><span class="prog-label">Pending Contracts</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:28%; background:#bc8cff;"></div></div><span class="prog-val">2</span></div>
+        <div class="prog-row"><span class="prog-label">Pending Docs</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:42%; background:#4b6cb7;"></div></div><span class="prog-val">3</span></div>
+        <div class="prog-row"><span class="prog-label">Intake sent</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:14%; background:#e3b341;"></div></div><span class="prog-val">1</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec-head blue">Google Ads Performance</div>
+    <div class="row2">
+      <div class="card">
+        <div class="card-title">Gasto por campaña</div>
+        <div class="chart-wrap" style="height:200px;"><canvas id="adsChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Detalle de campañas</div>
+        <table>
+          <thead><tr><th>Campaña</th><th>Costo</th><th>Clics</th><th>CTR</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Tramites</strong></td><td class="td-num">$239.51</td><td class="td-num">52</td><td class="td-green">4.36%</td><td><span class="td-badge" style="background:var(--green-dim); color:var(--green);">Activa</span></td></tr>
+            <tr><td><strong>Urgencia ICE</strong></td><td class="td-num">$212.80</td><td class="td-num">34</td><td class="td-green">5.59%</td><td><span class="td-badge" style="background:var(--green-dim); color:var(--green);">Activa</span></td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:12px; display:grid; grid-template-columns:repeat(3,1fr); gap:8px; text-align:center;">
+          <div><div style="font-size:10px; color:var(--muted);">Impresiones</div><div style="font-size:18px; font-weight:700;">1,726</div></div>
+          <div><div style="font-size:10px; color:var(--muted);">Total Clics</div><div style="font-size:18px; font-weight:700; color:var(--blue-light);">86</div></div>
+          <div><div style="font-size:10px; color:var(--muted);">Conv. (Leads)</div><div style="font-size:18px; font-weight:700; color:var(--purple);">7</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec-head orange">Zoho CRM · Fuentes de Leads</div>
+    <div class="card">
+      <table>
+        <thead><tr><th>Fuente</th><th>Leads</th><th>Tasa Contacto</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><span class="ch-tag ads">Landing Web (TL-MKT)</span></td><td class="td-num">6</td><td class="td-green">67%</td><td>1 Client / 2 Pipeline / 3 Pending</td></tr>
+          <tr><td><span class="ch-tag ads">Teruya Law Web</span></td><td class="td-num">1</td><td class="td-num">0%</td><td>1 Pending Docs</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row2">
+    <div class="card">
+      <div class="card-title">Análisis Ejecutivo</div>
+      <p style="font-size:12px; line-height:1.6; color:var(--muted);">
+        Esta semana logramos una <strong>optimización histórica</strong>. El CPL bajó a <strong>$64.61</strong> gracias a la Landing Web. Cerramos <strong>$1,750</strong> y tenemos <strong>$17,000</strong> en firma. La Landing Web es el motor con el 85% de los leads.
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title">Prioridades Próxima Semana</div>
+      <div class="prio-grid">
+        <div class="prio-item critical"><div class="prio-icon">🚨</div><div class="prio-content"><strong>Crítico</strong><p>Subir tasa de contacto al 80%. Auditar leads sin notas.</p></div></div>
+        <div class="prio-item opportunity"><div class="prio-icon">🚀</div><div class="prio-content"><strong>Oportunidad</strong><p>Cerrar los $17k de Hannah Rivera.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL MEDIA PENDING -->
+  <div style="margin-top:24px;">
+    <div class="sec-head pink">Social Media · Pendiente de Data</div>
+    <div class="card" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:200px; border:1px dashed var(--muted); background:transparent;">
+      <div style="font-size:32px; margin-bottom:10px;">📊</div>
+      <div style="font-size:14px; font-weight:600; color:var(--muted);">Métricas de FB, IG y TikTok pendientes de integración</div>
+      <div style="font-size:11px; color:var(--muted); margin-top:4px;">Esperando reporte de alcance y engagement del periodo 04-11 Mayo</div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div>Teruya Law · Marketing Intelligence · 11 May 2026</div>
+  <div>Fuentes: Zoho CRM · Google Ads</div>
+</footer>
+
+<script>
+  (function() {
+    const ctx = document.getElementById('leadChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Client ✓', 'Pending Contracts', 'Pending Docs', 'Intake sent'],
+        datasets: [{
+          data: [1, 2, 3, 1],
+          backgroundColor: ['#3fb950','#bc8cff','#4b6cb7','#e3b341'],
+          borderColor: '#161b22', borderWidth: 3
+        }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { display: false } } }
+    });
+  })();
+
+  (function() {
+    const ctx = document.getElementById('adsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Tramites', 'Urgencia ICE'],
+        datasets: [
+          { label: 'Inversión ($)', data: [239.51, 212.80], backgroundColor: '#1f6feb', borderRadius: 6 },
+          { label: 'Clics', data: [52, 34], backgroundColor: '#bc8cff99', borderRadius: 6 }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { color: '#8b949e' } }, x: { ticks: { color: '#8b949e' } } } }
+    });
+  })();
+</script>
+</body>
+</html>
