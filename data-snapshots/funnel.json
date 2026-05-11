@@ -1,0 +1,72 @@
+{
+  "generatedAt": "2026-05-11T16:49:49.651Z",
+  "leadSourceScope": [
+    "Click Funnel queue detenido",
+    "Landing Web (TL-MKT)",
+    "Teruya Law Web",
+    "Marketing",
+    "Zoom Intake (TL-MKT)"
+  ],
+  "totalLeads": 17,
+  "basedOn": "current_lead_status",
+  "notes": [
+    "Este funnel se deriva del Lead_Status actual de Zoho.",
+    "Es una aproximación operativa hasta conectar timeline y eventos más finos."
+  ],
+  "steps": [
+    {
+      "key": "lead_created",
+      "label": "Leads creados",
+      "count": 17,
+      "stepConversionRate": 100,
+      "cumulativeConversionRate": 100
+    },
+    {
+      "key": "contacted",
+      "label": "Contactados",
+      "count": 15,
+      "stepConversionRate": 88.2,
+      "cumulativeConversionRate": 88.2
+    },
+    {
+      "key": "meaningful_conversation",
+      "label": "Meaningful conversation",
+      "count": 6,
+      "stepConversionRate": 40,
+      "cumulativeConversionRate": 35.3
+    },
+    {
+      "key": "initial_consultation",
+      "label": "Initial consultation",
+      "count": 6,
+      "stepConversionRate": 100,
+      "cumulativeConversionRate": 35.3
+    },
+    {
+      "key": "intake_sent_for_approval",
+      "label": "Intake sent for approval",
+      "count": 9,
+      "stepConversionRate": 150,
+      "cumulativeConversionRate": 52.9
+    },
+    {
+      "key": "approved_intake",
+      "label": "Approved intake",
+      "count": 4,
+      "stepConversionRate": 44.4,
+      "cumulativeConversionRate": 23.5
+    },
+    {
+      "key": "client_signed",
+      "label": "Client / sign & paid",
+      "count": 2,
+      "stepConversionRate": 50,
+      "cumulativeConversionRate": 11.8
+    }
+  ],
+  "dateRange": {
+    "start": "2026-01-11T00:00:00.000Z",
+    "end": "2026-05-11T23:59:59.999Z",
+    "label": "rolling-120d"
+  }
+}

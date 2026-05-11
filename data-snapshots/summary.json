@@ -1,0 +1,488 @@
+{
+  "generatedAt": "2026-05-11T16:49:49.651Z",
+  "projectMode": "github-actions-hosting",
+  "amountSpent": 882.56,
+  "currencyCode": "USD",
+  "googleAdsClicks": 166,
+  "googleAdsImpressions": 3015,
+  "googleAdsConversions": 10,
+  "googleAdsCampaigns": 2,
+  "googleAdsAccountId": "3737215425",
+  "googleAdsAccountName": "Teruya account",
+  "googleAdsCampaignNames": [
+    "Tramites",
+    "Urgencia ICE Deportacion"
+  ],
+  "googleAdsCampaignTypes": [
+    "SEARCH"
+  ],
+  "leadsCreated": 17,
+  "firstHumanTouches": 16,
+  "avgResponseTimeMinutes": 1367.7,
+  "medianResponseTimeMinutes": 265.3,
+  "leadSources": [
+    {
+      "name": "Landing Web (TL-MKT)",
+      "leads": 8,
+      "contacted": 8
+    },
+    {
+      "name": "Zoom Intake (TL-MKT)",
+      "leads": 3,
+      "contacted": 2
+    },
+    {
+      "name": "Click Funnel queue detenido",
+      "leads": 2,
+      "contacted": 1
+    },
+    {
+      "name": "Marketing",
+      "leads": 2,
+      "contacted": 2
+    },
+    {
+      "name": "Teruya Law Web",
+      "leads": 2,
+      "contacted": 2
+    }
+  ],
+  "intakeOwners": [
+    {
+      "name": "Johan Manuel Triviño Muñoz",
+      "leads": 3,
+      "contacted": 3,
+      "leadSources": [
+        "Landing Web (TL-MKT)",
+        "Zoom Intake (TL-MKT)"
+      ]
+    },
+    {
+      "name": "Alexandra Cuervo",
+      "leads": 2,
+      "contacted": 1,
+      "leadSources": [
+        "Click Funnel queue detenido",
+        "Marketing"
+      ]
+    },
+    {
+      "name": "Federico Javier Jimenez Kostiuk",
+      "leads": 2,
+      "contacted": 2,
+      "leadSources": [
+        "Landing Web (TL-MKT)",
+        "Marketing"
+      ]
+    },
+    {
+      "name": "Leonardo David Reyna",
+      "leads": 2,
+      "contacted": 2,
+      "leadSources": [
+        "Teruya Law Web"
+      ]
+    },
+    {
+      "name": "Maria Fernanda Valdes",
+      "leads": 2,
+      "contacted": 2,
+      "leadSources": [
+        "Landing Web (TL-MKT)"
+      ]
+    },
+    {
+      "name": "Maria Yasbeth Huerta",
+      "leads": 2,
+      "contacted": 1,
+      "leadSources": [
+        "Click Funnel queue detenido",
+        "Zoom Intake (TL-MKT)"
+      ]
+    },
+    {
+      "name": "Fernando Daniel Velazco Aranda",
+      "leads": 1,
+      "contacted": 1,
+      "leadSources": [
+        "Landing Web (TL-MKT)"
+      ]
+    },
+    {
+      "name": "Jenifer Andrea Lozano Valbuena",
+      "leads": 1,
+      "contacted": 1,
+      "leadSources": [
+        "Landing Web (TL-MKT)"
+      ]
+    },
+    {
+      "name": "Juan Danniel Reyes Peñuela",
+      "leads": 1,
+      "contacted": 1,
+      "leadSources": [
+        "Landing Web (TL-MKT)"
+      ]
+    },
+    {
+      "name": "Nicolas Velandia Gonzalez",
+      "leads": 1,
+      "contacted": 1,
+      "leadSources": [
+        "Landing Web (TL-MKT)"
+      ]
+    }
+  ],
+  "leadDetails": [
+    {
+      "id": "6498620000056652178",
+      "createdAt": "2026-05-08T20:01:37.000Z",
+      "fullName": "Elsa Jimenez Reg Sthefanny Camila Lopez",
+      "email": null,
+      "phone": "8563831679",
+      "lastActivityAt": "2026-05-09T13:30:58.000Z",
+      "leadSource": "Landing Web (TL-MKT)",
+      "leadStatus": "intake sent for approval",
+      "contacted": true,
+      "intakeOwner": "Jenifer Andrea Lozano Valbuena",
+      "leadConversionTime": null,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": "NEEDS IMMIGRATIONS DOCS",
+      "lastNote": null,
+      "firstHumanTouchAt": "2026-05-09T13:30:58.000Z",
+      "responseTimeMinutes": 1049.3
+    },
+    {
+      "id": "6498620000056589230",
+      "createdAt": "2026-05-08T18:44:39.000Z",
+      "fullName": "Hannah Rivera Reg Freddy Fernando Vasquez Chavez",
+      "email": "hannah.rivera21@icloud.com",
+      "phone": "+14072473017",
+      "lastActivityAt": "2026-05-08T20:00:32.000Z",
+      "leadSource": "Landing Web (TL-MKT)",
+      "leadStatus": "presentation and signature of the contract",
+      "contacted": true,
+      "intakeOwner": "Fernando Daniel Velazco Aranda",
+      "leadConversionTime": null,
+      "actualValue": 12000,
+      "caseTitle": "EOIR 42B Client is already in Removal Proceedings",
+      "reasonForDnhLead": null,
+      "lastNote": null,
+      "firstHumanTouchAt": null,
+      "responseTimeMinutes": null
+    },
+    {
+      "id": "6498620000056568001",
+      "createdAt": "2026-05-07T23:34:18.000Z",
+      "fullName": "Rodrigo Hernandez lopez, Alejandra Celestino Reyes, Fatima Hernandez, Diego Hernandez & Sebastian Hernandez",
+      "email": "rodriherna14@gmail.com",
+      "phone": "18502641887",
+      "lastActivityAt": "2026-05-11T13:36:47.000Z",
+      "leadSource": "Landing Web (TL-MKT)",
+      "leadStatus": "initial consultation",
+      "contacted": true,
+      "intakeOwner": "Federico Javier Jimenez Kostiuk",
+      "leadConversionTime": null,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": null,
+      "lastNote": "ZCRMTAREA",
+      "firstHumanTouchAt": "2026-05-08T13:14:54.000Z",
+      "responseTimeMinutes": 820.6
+    },
+    {
+      "id": "6498620000056398078",
+      "createdAt": "2026-05-06T20:48:15.000Z",
+      "fullName": "Amber Treibley Reg Marcos Solano Martinez",
+      "email": "atuna3649@gmail.com",
+      "phone": "3524339792",
+      "lastActivityAt": "2026-05-08T17:36:56.000Z",
+      "leadSource": "Landing Web (TL-MKT)",
+      "leadStatus": "pending documents (auto)",
+      "contacted": true,
+      "intakeOwner": "Maria Fernanda Valdes",
+      "leadConversionTime": null,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": null,
+      "lastNote": "Le acabo de informar a Amber que entendemos la urgencia de iniciar el proceso y que el caso criminal ya está siendo revisado por la abogada para poder ofrecer las mejores soluciones. También le expliqué que, en cuanto al tema migratorio, debemos esperar a que Marcos pase bajo custodia de ICE antes de proceder con esa parte. Le pedí que permita que el abogado la contacte una vez tenga una estrategia definida y le aseguré que el caso ya está siendo tratado como prioritario por tratarse de un detenido. Además, traté de darle tranquilidad y confianza en el proceso.",
+      "firstHumanTouchAt": "2026-05-06T20:59:14.000Z",
+      "responseTimeMinutes": 11
+    },
+    {
+      "id": "6498620000056371222",
+      "createdAt": "2026-05-06T14:48:19.000Z",
+      "fullName": "Zwinda Beachamp",
+      "email": "zwindabeauchamp122@gmail.com",
+      "phone": "+14074055913",
+      "lastActivityAt": "2026-05-09T14:12:03.000Z",
+      "leadSource": "Teruya Law Web",
+      "leadStatus": "pending documents (auto)",
+      "contacted": true,
+      "intakeOwner": "Leonardo David Reyna",
+      "leadConversionTime": null,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": null,
+      "lastNote": "We attempted to make contact, but there was no response.",
+      "firstHumanTouchAt": "2026-05-09T14:12:03.000Z",
+      "responseTimeMinutes": 4283.7
+    },
+    {
+      "id": "6498620000056338210",
+      "createdAt": "2026-05-05T20:03:51.000Z",
+      "fullName": "Yerica Leilani Soto Tlahuice",
+      "email": "yerica.soto@gmail.com",
+      "phone": "+18283715525",
+      "lastActivityAt": "2026-05-05T20:40:14.000Z",
+      "leadSource": "Landing Web (TL-MKT)",
+      "leadStatus": "client",
+      "contacted": true,
+      "intakeOwner": "Nicolas Velandia Gonzalez",
+      "leadConversionTime": 2,
+      "actualValue": 1750,
+      "caseTitle": "FBI & FOIA E-FILE",
+      "reasonForDnhLead": null,
+      "lastNote": "S&P Today",
+      "firstHumanTouchAt": "2026-05-05T20:12:39.000Z",
+      "responseTimeMinutes": 8.8
+    },
+    {
+      "id": "6498620000056338173",
+      "createdAt": "2026-05-05T19:01:30.000Z",
+      "fullName": "Hannah Rivera Reg Freddy Fernando Vasquez Chavez",
+      "email": "hannah.rivera21@icloud.com",
+      "phone": "+14072473017",
+      "lastActivityAt": "2026-05-09T17:19:31.000Z",
+      "leadSource": "Landing Web (TL-MKT)",
+      "leadStatus": "presentation and signature of the contract",
+      "contacted": true,
+      "intakeOwner": "Johan Manuel Triviño Muñoz",
+      "leadConversionTime": null,
+      "actualValue": 5000,
+      "caseTitle": "BOND",
+      "reasonForDnhLead": null,
+      "lastNote": "Client is afraid of staring the process due to the bad google reviews. She will talk to her husband and will let me know in the afternoon her decision.",
+      "firstHumanTouchAt": "2026-05-05T19:17:58.000Z",
+      "responseTimeMinutes": 16.5
+    },
+    {
+      "id": "6498620000056133001",
+      "createdAt": "2026-05-03T16:30:46.000Z",
+      "fullName": "Maria de la cruz",
+      "email": "dlcruzsmerlin12@gmail.com",
+      "phone": "+16895280234",
+      "lastActivityAt": "2026-05-06T22:51:57.000Z",
+      "leadSource": "Zoom Intake (TL-MKT)",
+      "leadStatus": "not contacted",
+      "contacted": false,
+      "intakeOwner": "Maria Yasbeth Huerta",
+      "leadConversionTime": null,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": null,
+      "lastNote": "S realiza llamada pero no respondio, se envió e-mail para confirmar en que horario se le puede marcar",
+      "firstHumanTouchAt": "2026-05-05T13:14:15.000Z",
+      "responseTimeMinutes": 2683.5
+    },
+    {
+      "id": "6498620000055999003",
+      "createdAt": "2026-05-01T20:16:14.000Z",
+      "fullName": "Leslie Buiza Butler",
+      "email": "noemail@noemail.com",
+      "phone": "4075754055",
+      "lastActivityAt": "2026-05-06T17:23:54.000Z",
+      "leadSource": "Zoom Intake (TL-MKT)",
+      "leadStatus": "rejected intake",
+      "contacted": true,
+      "intakeOwner": "Johan Manuel Triviño Muñoz",
+      "leadConversionTime": null,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": null,
+      "lastNote": "Clienta sólo habla inglés. Se puso en contatco porque indica tenía una cita programada con abogada el día de hoy vía zoom, pero nunca recibió el link para unirse, confirmó su correo es <a style=\"color:rgb(84, 100, 242);display:inline;\" target=\"_blank\" href=\"http://LButlerOrlando@yahoo.com/\"><u>LButlerOrlando@yahoo.com</u></a>, y dice que tampoco lo recibió en spam. Se escaló a Johan para dar seguimiendo.",
+      "firstHumanTouchAt": "2026-05-01T23:00:55.000Z",
+      "responseTimeMinutes": 164.7
+    },
+    {
+      "id": "6498620000055918093",
+      "createdAt": "2026-05-01T15:37:44.000Z",
+      "fullName": "Jose Antonio Cano",
+      "email": "jcano19621962@gmail.com",
+      "phone": "+14076272874",
+      "lastActivityAt": "2026-05-05T15:19:22.000Z",
+      "leadSource": "Teruya Law Web",
+      "leadStatus": "pending documents (auto)",
+      "contacted": true,
+      "intakeOwner": "Leonardo David Reyna",
+      "leadConversionTime": null,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": null,
+      "lastNote": "Llame al señor Jose para pedirle la documentacion, pero no encuentra el acta de matrimonio. Lo buscara nuevamente y me lo enviara. Quedo al pendiente.",
+      "firstHumanTouchAt": "2026-05-05T15:18:44.000Z",
+      "responseTimeMinutes": 5741
+    },
+    {
+      "id": "6498620000055835002",
+      "createdAt": "2026-04-30T08:18:36.000Z",
+      "fullName": "Aviamna Yanara Martinez Oñate",
+      "email": "ayankier@gmail.com",
+      "phone": "+18138451958",
+      "lastActivityAt": "2026-04-30T17:59:54.000Z",
+      "leadSource": "Landing Web (TL-MKT)",
+      "leadStatus": "did not hire",
+      "contacted": true,
+      "intakeOwner": "Juan Danniel Reyes Peñuela",
+      "leadConversionTime": null,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": null,
+      "lastNote": "Cliente se comunica ya que piensa que puede sacar la cita para la ciudadania con nosotros ya no necesita de un abogado se envia a dnh",
+      "firstHumanTouchAt": "2026-04-30T14:24:26.000Z",
+      "responseTimeMinutes": 365.8
+    },
+    {
+      "id": "6498620000055659149",
+      "createdAt": "2026-04-28T20:01:01.000Z",
+      "fullName": "Zenaide Xadier Silva",
+      "email": null,
+      "phone": "+1475799203",
+      "lastActivityAt": "2026-05-06T18:03:43.000Z",
+      "leadSource": "Zoom Intake (TL-MKT)",
+      "leadStatus": "rejected intake",
+      "contacted": true,
+      "intakeOwner": "Johan Manuel Triviño Muñoz",
+      "leadConversionTime": null,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": null,
+      "lastNote": "The numbr is incomplete - cannot take any actions there is no email",
+      "firstHumanTouchAt": "2026-05-02T19:04:06.000Z",
+      "responseTimeMinutes": 5703.1
+    },
+    {
+      "id": "6498620000054878049",
+      "createdAt": "2026-04-18T17:33:32.000Z",
+      "fullName": "Elsa Jimenez Reg Sthefanny Camila Lopez Jimenez",
+      "email": null,
+      "phone": "8563831679",
+      "lastActivityAt": "2026-05-08T18:24:55.000Z",
+      "leadSource": "Landing Web (TL-MKT)",
+      "leadStatus": "did not hire",
+      "contacted": true,
+      "intakeOwner": "Maria Fernanda Valdes",
+      "leadConversionTime": null,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": "NEEDS IMMIGRATIONS DOCS",
+      "lastNote": "Se está tratando de obtener ID de Elsa para que se apruebe este caso, quedó enviarla el día de hoy",
+      "firstHumanTouchAt": "2026-04-18T17:35:18.000Z",
+      "responseTimeMinutes": 1.8
+    },
+    {
+      "id": "6498620000054862001",
+      "createdAt": "2026-04-18T15:42:25.000Z",
+      "fullName": "Damaris Bamaca REG Hersson Joab Bamaca Perez",
+      "email": null,
+      "phone": "4074665121",
+      "lastActivityAt": "2026-04-18T15:47:57.000Z",
+      "leadSource": "Click Funnel queue detenido",
+      "leadStatus": "pending documents (auto)",
+      "contacted": true,
+      "intakeOwner": "Maria Yasbeth Huerta",
+      "leadConversionTime": null,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": null,
+      "lastNote": "Se realiza llamada con Damaris Bamaca para toma de Intake",
+      "firstHumanTouchAt": "2026-04-18T15:47:57.000Z",
+      "responseTimeMinutes": 5.5
+    },
+    {
+      "id": "6498620000053621096",
+      "createdAt": "2026-04-08T21:54:17.000Z",
+      "fullName": "Santiago Giraldo Ramirez",
+      "email": "santiagogiraldoramirez1996@gmail.com",
+      "phone": "407-452-2165",
+      "lastActivityAt": "2026-04-09T18:28:08.000Z",
+      "leadSource": "Marketing",
+      "leadStatus": "client",
+      "contacted": true,
+      "intakeOwner": "Federico Javier Jimenez Kostiuk",
+      "leadConversionTime": 9,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": null,
+      "lastNote": "Cliente contactado responde por msj de texto pero al marcarle no contesta se le envia msj de respuesta <br>(407) 452-2165 12:51 PM<br>Excelsa mi orgullo de escuchar hermano! Claro, llámame hoy cuando quieras!<br>You 1:27 PM<br>Muy buenas tardes espero se encuentre muy bien por favor indicarme una hora prudente para poder marcarle agradezco su atención y su pronta respuesta, muchas gracias",
+      "firstHumanTouchAt": "2026-04-09T14:05:04.000Z",
+      "responseTimeMinutes": 970.8
+    },
+    {
+      "id": "6498620000052148402",
+      "createdAt": "2026-03-27T20:24:43.000Z",
+      "fullName": "Fabiola LARA CORONA",
+      "email": null,
+      "phone": "(704) 301-2752",
+      "lastActivityAt": "2026-03-27T20:26:24.000Z",
+      "leadSource": "Click Funnel queue detenido",
+      "leadStatus": "junk lead",
+      "contacted": false,
+      "intakeOwner": "Alexandra Cuervo",
+      "leadConversionTime": null,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": null,
+      "lastNote": "La cliente marca mientras estaba en BRB, se le devuelve la llamada perdida, y menciona que necesita hacer 2 pagos, se tranfiere a recepción. (Ingresa de la linea de detenidos)",
+      "firstHumanTouchAt": "2026-03-27T20:26:24.000Z",
+      "responseTimeMinutes": 1.7
+    },
+    {
+      "id": "6498620000051302001",
+      "createdAt": "2026-03-20T17:54:23.000Z",
+      "fullName": "Alexandra Ruiz Peguero",
+      "email": "alexruizpeguero@gmail.com",
+      "phone": "407-385-7255",
+      "lastActivityAt": "2026-04-08T18:18:35.000Z",
+      "leadSource": "Marketing",
+      "leadStatus": "did not hire",
+      "contacted": true,
+      "intakeOwner": "Alexandra Cuervo",
+      "leadConversionTime": null,
+      "actualValue": null,
+      "caseTitle": null,
+      "reasonForDnhLead": "Not interested",
+      "lastNote": "Contesta pero menciona que ya no necesita el servicio",
+      "firstHumanTouchAt": "2026-03-20T18:49:29.000Z",
+      "responseTimeMinutes": 55.1
+    }
+  ],
+  "leadSourceScope": [
+    "Click Funnel queue detenido",
+    "Landing Web (TL-MKT)",
+    "Teruya Law Web",
+    "Marketing",
+    "Zoom Intake (TL-MKT)"
+  ],
+  "coverage": {
+    "zohoLeads": true,
+    "zohoTimeline": true,
+    "googleAds": true
+  },
+  "notes": [
+    "Este snapshot se genera desde Zoho Leads.",
+    "Solo se incluyen los Lead Source que pertenecen a la campaña actual de Google Ads.",
+    "La ventana temporal es rolling-120d para comparar períodos.",
+    "La inversión y las métricas de Google Ads ya se leen desde la API."
+  ],
+  "dateRange": {
+    "start": "2026-01-11T00:00:00.000Z",
+    "end": "2026-05-11T23:59:59.999Z",
+    "label": "rolling-120d"
+  },
+  "sampleWindow": {
+    "maxPages": 5,
+    "perPage": 200
+  }
+}
