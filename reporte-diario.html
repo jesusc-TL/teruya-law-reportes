@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte Diario — Teruya Law</title>
+  <style>
+    /* ═══════════════════════════════════════════════
+       THEME EJECUTIVO REPORTE DIARIO — TERUYA LAW
+    ═══════════════════════════════════════════════ */
+    :root {
+      --bg-page: #F6F8FA;
+      --bg-card: #FFFFFF;
+      --bg-header: #0B2135;
+      --text-header: #FFFFFF;
+      --accent-gold: #E0CD93;
+      --accent-primary: #0078D4;
+      --text-primary: #24292F;
+      --text-secondary: #57606A;
+      --border: #D0D7DE;
+      --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      
+      /* Status Colors */
+      --color-done: #2DA44E;
+      --color-progress: #BF8700;
+      --color-blocked: #CF222E;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-primary);
+      font-size: 13px;
+      line-height: 1.5;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      padding-bottom: 40px;
+    }
+
+    /* ═══ HEADER ═══ */
+    .header {
+      background: var(--bg-header);
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 4px solid var(--accent-gold);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      background: var(--accent-gold);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bg-header);
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .header-title h1 {
+      font-size: 18px;
+      color: var(--text-header);
+      font-weight: 600;
+    }
+
+    .header-title p {
+      font-size: 13px;
+      color: #94A3B8;
+      margin-top: 2px;
+    }
+
+    .header-date {
+      text-align: right;
+    }
+
+    .header-date .date {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+
+    .header-date .time {
+      font-size: 12px;
+      color: #94A3B8;
+    }
+
+    /* ═══ LAYOUT ═══ */
+    .container {
+      max-width: 900px;
+      margin: 24px auto;
+      padding: 0 32px;
+    }
+
+    /* ═══ SUMMARY STATS ═══ */
+    .stats-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      flex: 1;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .stat-val {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* ═══ TIMELINE / LOG ═══ */
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .log-entry {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent-primary);
+      border-radius: 6px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .log-time-account {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .time-badge {
+      background: #F3F4F6;
+      border: 1px solid #D1D5DB;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    .account-badge {
+      font-size: 11px;
+      font-weight: 700;
+      background: #E0E7FF;
+      color: #3730A3;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    .status-done {
+      background: #DCFCE7;
+      color: #166534;
+      border: 1px solid #BBF7D0;
+    }
+
+    .log-body h3 {
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .log-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 12px;
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+      border-radius: 4px;
+      padding: 12px;
+    }
+
+    .log-col-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .log-col-text {
+      font-size: 12px;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .proposal-box {
+      margin-top: 12px;
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-left: 3px solid #F59E0B;
+      padding: 10px 14px;
+      border-radius: 4px;
+    }
+
+    .proposal-box strong {
+      color: #92400E;
+      font-size: 11px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* Print styles for perfect PDF export */
+    @media print {
+      body { background: white; }
+      .container { padding: 0; max-width: 100%; margin: 0; }
+      .log-entry { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ENCABEZADO EJECUTIVO -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo-mark">TL</div>
+      <div class="header-title">
+        <h1>Reporte Diario de Operaciones</h1>
+        <p>Departamento de Marketing · Teruya Law & Sterling</p>
+      </div>
+    </div>
+    <div class="header-date">
+      <div class="date">Martes, 21 de Abril 2026</div>
+      <div class="time">Cierre de jornada: 17:30 ET</div>
+    </div>
+  </div>
+
+  <div class="container">
+    
+    <!-- RESUMEN EJECUTIVO (Estas variables las calculará n8n) -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Horas Invertidas</div>
+        <div class="stat-val">9.0 hrs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Tareas Completadas</div>
+        <div class="stat-val">6</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Imprevistos Resueltos</div>
+        <div class="stat-val">2</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Tasa de Progreso</div>
+        <div class="stat-val" style="color: var(--color-done);">100%</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Registro Detallado por Hora</h2>
+
+    <!-- LOG ENTRY EJEMPLO 1 -->
+    <div class="log-entry">
+      <div class="log-header">
+        <div class="log-time-account">
+          <span class="time-badge">08:30 AM - 09:30 AM</span>
+          <span class="account-badge">Teruya Law</span>
+        </div>
+        <span class="status-badge status-done">✔ Completado</span>
+      </div>
+      
+      <div class="log-body">
+        <h3>Revisión de Campañas (Google Ads & Meta Ads)</h3>
+        
+        <div class="log-grid">
+          <div>
+            <div class="log-col-title">🎯 Tarea Planificada</div>
+            <div class="log-col-text">Control diario de presupuesto y análisis de CPL en campañas PMax y Search.</div>
+          </div>
+          <div>
+            <div class="log-col-title">🔥 Imprevistos / Nuevas Tareas</div>
+            <div class="log-col-text">Se detectó formulario de contacto caído en Meta Ads por 20 min.</div>
+          </div>
+        </div>
+
+        <div class="proposal-box">
+          <strong>🔍 Hallazgos y Solución Propuesta</strong>
+          <div class="log-col-text">
+            Hallazgo: La campaña PMax gastó el 40% del budget diario en 1 hora. 
+            <br>Acción: Se frenó la campaña temporalmente. Se propone redistribuir ese porcentaje a la campaña de Search que tiene mayor intención de conversión.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOG ENTRY EJEMPLO 2 -->
+    <div class="log-entry" style="border-left-color: #9B59B6;">
+      <div class="log-header">
+        <div class="log-time-account">
+          <span class="time-badge">09:30 AM - 10:30 AM</span>
+          <span class="account-badge" style="background: #FAF5FF; color: #6B21A8;">Teruya & Sterling</span>
+        </div>
+        <span class="status-badge status-done">✔ Completado</span>
+      </div>
+      
+      <div class="log-body">
+        <h3>Desarrollo Frontend de Landing Page</h3>
+        
+        <div class="log-grid">
+          <div>
+            <div class="log-col-title">🎯 Tarea Planificada</div>
+            <div class="log-col-text">Implementación de nueva sección de testimonios y formulario de citas.</div>
+          </div>
+          <div>
+            <div class="log-col-title">🔥 Imprevistos / Nuevas Tareas</div>
+            <div class="log-col-text">Ninguno. Flujo de trabajo ininterrumpido.</div>
+          </div>
+        </div>
+
+        <div class="proposal-box">
+          <strong>🔍 Hallazgos y Solución Propuesta</strong>
+          <div class="log-col-text">
+            Hallazgo: La preview en formato mobile rompía el padding del formulario. 
+            <br>Acción: Ajustado con CSS flex. Landing subida a entorno pre-producción para revisión.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
